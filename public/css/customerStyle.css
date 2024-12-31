@@ -1,0 +1,517 @@
+/* General body and theme */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header styles */
+header {
+    background-color: #a61c40; /* Same as app theme */
+    color: white;
+    padding: 20px 0;
+    margin-bottom: 20px;
+    padding-right: 20px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    padding: 0 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 1.2rem;
+}
+
+nav a:hover {
+    color: #c3a532; /* Hover color that matches your theme */
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background-color: #a61c40; /* Same as header */
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+#search {
+  position: relative;
+}
+
+#businessSearch {
+  padding: 10px;
+  width: 250px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+#searchResultsDropdown {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 40px; /* Adjust the position below the search input */
+  left: 0;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  color:#333;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+#searchResultsDropdown .business-result {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+#searchResultsDropdown .business-result:last-child {
+  border-bottom: none;
+}
+
+/* Styling for the 'View Details' button */
+#searchResultsDropdown .view-details-btn {
+  display: inline-block;
+  background-color: none; /* Button background color */
+  color: #a61c40; /* Padding for the button */
+  text-align: center;
+}
+
+/* Hover effect for the button */
+#searchResultsDropdown .view-details-btn:hover {
+  color: #c3a532;
+  text-decoration: underline; /* Darker shade on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+
+#closeDropdown {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+
+/* Close button for the dropdown */
+#closeDropdown {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Featured Businesses Section */
+#featuredBusinesses {
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 1000px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  #featuredBusinesses h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Carousel Container */
+  .carousel-container {
+    position: relative;
+    max-width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .carousel-slide {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 20px
+  }
+  
+  .business-container {
+    flex: 0 0 30%; /* Show 3 items per slide */
+    width: 80%; /* Adjust width of each business item */
+    margin: 0 10px;
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .business-logo img {
+    max-width: 80px;
+    max-height: 80px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    border-radius: 8px;
+  }
+  
+  .business-info h3 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .rating {
+    color: #ffcc00;
+    font-size: 1.2rem;
+  }
+  
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  .carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  
+  .prev {
+    left: 0;
+  }
+  
+  .next {
+    right: 0;
+  }
+
+  .business-info .view-button {
+    padding: 10px 15px;
+    background-color: none;
+    color: #a61c40;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .business-info .view-button:hover {
+    text-decoration: underline;
+    color: #c3a532;
+  }
+.business-container:hover {
+  transform: scale(1.1);
+}
+  
+/* Features Section */
+.dashboard-links {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 23%;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: #333;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dash-pic {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #a61c40;
+  margin-top: 10px;
+}
+
+.feature-card:hover p {
+  color: #c3a532;
+}
+
+.features {
+  margin: 30px 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+#business-profile {
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.business-logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.business-details p {
+  font-size: 1rem;
+  margin: 10px 0;
+}
+
+.business-details strong {
+  color: #a61c40;
+}
+
+/* Icons Section */
+.business-icons {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+
+.icon-btn img {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+/* Appointments Section */
+.appointments-section {
+  margin-top: 30px;
+}
+
+.appointments-section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.appointments-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.appointments-section input {
+  padding: 8px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Leave a Review Section */
+.reviews-section {
+  margin-top: 30px;
+}
+
+.reviews-section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.reviews-section button {
+  padding: 10px;
+  background-color: #a61c40;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.reviews-section button:hover {
+  background-color: #c3a532;
+}
+
+
+
+/* Media Queries */
+
+@media (max-width: 768px) {
+  header {
+      padding: 15px 0; /* Reduce padding on tablets */
+  }
+
+  nav {
+      flex-direction: column; /* Stack navigation items vertically */
+      align-items: center;
+  }
+
+  nav a {
+      margin-left: 0;
+      margin-top: 10px;
+      font-size: 1.1rem; /* Slightly smaller text for better readability */
+  }
+
+  footer {
+      padding: 15px 0; /* Reduce padding for footer */
+  }
+  #businessSearch {
+    width: 200px; /* Adjust the width of the search input */
+    font-size: 14px; /* Slightly smaller font size */
+  }
+
+  #searchResultsDropdown {
+    max-height: 250px; /* Reduce max height of dropdown for tablets */
+  }
+
+  #searchResultsDropdown .business-result {
+    padding: 8px; /* Slightly reduced padding */
+  }
+
+  #closeDropdown {
+    font-size: 16px; /* Smaller close button font size */
+  }
+  .feature-card {
+    width: 45%; /* Adjust width of feature cards to fit 2 items per row */
+    padding: 15px; /* Adjust padding for smaller screens */
+  }
+
+  .dashboard-links {
+    justify-content: center; /* Center align feature cards */
+  }
+
+  .dash-pic {
+    width: 50px; /* Reduce image size */
+    height: 50px;
+  }
+
+  .feature-card p {
+    font-size: 1.1rem; /* Adjust font size */
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+      padding: 10px 0; /* Further reduce padding on mobile devices */
+  }
+
+  nav {
+      flex-direction: column; /* Stack navigation items vertically */
+      align-items: center;
+  }
+
+  nav a {
+      margin-left: 0;
+      margin-top: 10px;
+      font-size: 1rem; /* Further decrease text size for mobile */
+  }
+
+  footer {
+      padding: 10px 0; /* Further reduce footer padding for mobile */
+  }
+
+  footer p {
+      font-size: 0.9rem; /* Slightly smaller footer text for mobile */
+  }
+  #businessSearch {
+    width: 180px; /* Further reduce the width on mobile */
+    font-size: 12px; /* Further reduce font size */
+  }
+
+  #searchResultsDropdown {
+    max-height: 200px; /* Further reduce max height of dropdown */
+  }
+
+  #searchResultsDropdown .business-result {
+    padding: 6px; /* Even smaller padding for mobile */
+  }
+
+  #closeDropdown {
+    font-size: 14px; /* Further reduce close button font size */
+  }
+  .feature-card {
+    width: 100%; /* Full width for mobile */
+    padding: 10px; /* Further reduce padding */
+  }
+
+  .dashboard-links {
+    justify-content: center; /* Center align feature cards */
+  }
+
+  .dash-pic {
+    width: 40px; /* Further reduce image size */
+    height: 40px;
+  }
+
+  .feature-card p {
+    font-size: 1rem; /* Reduce font size */
+  }
+}
+
+
+
+
+/* Style the stars */
+#stars {
+  display: flex;
+}
+
+.star {
+  font-size: 30px;
+  color: gray;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.star.selected {
+  color: gold;
+}
+
+.star:hover {
+  color: gold;
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartSmart Dashboard</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/Images/Favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Images/Favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="/css/customerStyle.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a class="logopic" href="/">
+                <img src="/Images/Logo.png" alt="Website logo: StartSmart" width="180" height="180">
+            </a>
+            <a href="/customers/dashboard" class="back-btn" id="backBtn">← Back</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Business Profile Section -->
+        <section id="business-profile">
+            <div class="profile-header">
+                <img id="businessLogo" alt="Business Logo" class="business-logo">
+                <h1>Business Name: <span id = "businessName"></span> </h1>
+            </div>
+
+            <div class="business-details">
+                <p><strong> Description:</strong> <span id="businessDescription"></span> </p>
+                <p><strong>Location:</strong> <span id="businessLocation"></span> </p>
+                <p><strong>Operating Hours:</strong> <span id="businessHours"></span> </p>
+                <p><strong>Rating:</strong> <span id="businessRating"></span> </p>
+                
+
+            <div class="business-icons">
+                <a href="#" class="icon-btn" id="messageIcon"><img src="/Images/Icons/chat.png" alt="Message Icon"></a>
+                <a href="#" class="icon-btn" id="onlineStoreIcon"><img src="/Images/Icons/online-store.png" alt="Online Store Icon"></a>
+            </div>
+
+            <!-- Schedule Appointments Section -->
+            <div class="appointments-section">
+                <h2>Schedule an Appointment</h2>
+                <form id="appointmentForm">
+                    <label for="appointmentDate">Select Date:</label>
+                    <input type="date" id="appointmentDate" name="appointmentDate" required>
+                    <label for="appointmentTime">Select Time:</label>
+                    <input type="time" id="appointmentTime" name="appointmentTime" required>
+                    <button type="submit">Book Appointment</button>
+                </form>
+                <div id="appointmentConfirmation"></div>
+            </div>
+            
+
+           <!-- Leave a Review Section -->
+<div class="reviews-section">
+    <h2>Leave a Review</h2>
+
+    <div>
+        <label for="rating">Rating:</label>
+        <div id="stars">
+            <!-- Stars for rating (initially all empty) -->
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+        </div>
+    </div>
+
+    <div>
+        <label for="reviewText">Review:</label>
+        <textarea id="reviewText" placeholder="Write your review..."></textarea>
+    </div>
+
+    <button id="leaveReviewBtn">Submit Review</button>
+
+    <!-- Review List -->
+    <ul id="reviewsList"></ul> 
+</div>
+
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 StartSmart. All rights reserved.</p>
+    </footer>
+
+    <script>
+    
+        // Function to generate stars based on rating
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const emptyStars = 5 - fullStars;
+            let stars = '';
+    
+            for (let i = 0; i < fullStars; i++) {
+                stars += '★';
+            }
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '☆';
+            }
+            return stars;
+        }
+    
+        document.addEventListener("DOMContentLoaded", async function() {
+            const businessId = window.location.pathname.split("/").pop();  // Extract businessId from URL
+            console.log("Business ID:", businessId);  // Log the extracted business ID
+        
+            try {
+                const response = await fetch(`/customers/api/business/${businessId}`);
+                const data = await response.json();
+                const stars = generateStars(data.business.average_rating);
+                    
+                console.log('Fetched Business Data:', data); // Debugging line to see the structure
+                
+                if (data.business) {  // Ensure business data exists
+                    // Update the page with business data
+                    document.getElementById('businessLogo').src = data.business.logo_image_url || '/Images/default-logo.png';
+                    document.getElementById('businessName').textContent = data.business.business_name;
+                    document.getElementById('businessDescription').textContent = data.business.business_description;
+                    document.getElementById('businessLocation').textContent = data.business.location;
+                    document.getElementById('businessHours').textContent = `${data.business.opening_time} - ${data.business.closing_time}`;
+                    document.getElementById('businessRating').textContent = `${stars}`; // Display stars for the business rating
+        
+                    // Display reviews
+                    const reviewsList = document.getElementById('reviewsList');
+                    if (Array.isArray(data.reviews) && data.reviews.length > 0) {
+                        // Display review cards if there are reviews
+                        data.reviews.forEach(review => {
+                            const reviewCard = document.createElement('div');
+                            reviewCard.classList.add('review-card');
+    
+                            reviewCard.innerHTML = ` 
+                                <div class="review-header">
+                                    <span><strong>${review.first_name}</strong></span>
+                                    <span>${generateStars(review.rating)}</span>
+                                    <span>${new Date(review.created_at).toLocaleDateString()}</span>
+                                </div>
+                                <div class="review-body">
+                                    <p>${review.review_txt}</p>
+                                </div>
+                            `;
+                    
+                            // Append review card to the list
+                            reviewsList.appendChild(reviewCard);
+                        });
+                    } else {
+                        reviewsList.innerHTML = "<li>No reviews yet.</li>";
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching business data:', error);
+            }
+        });
+    </script>
+    <script src="/js/customer/customerAppointment.js"></script>
+    
+    
+</body>
+</html>

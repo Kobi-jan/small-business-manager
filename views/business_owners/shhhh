@@ -1,0 +1,161 @@
+ <!-- Sales, Reports, Store, Appointments, Reviews -->
+            <!-- Sections below remain the same as your original template -->
+              <!-- Inventory Management Section -->
+              <section id="inventory" class="mb-5">
+                <h2>Inventory Management</h2>
+                <p>Manage your products and stock levels.</p>
+                <button class="btn btn-success mb-3" id="addProduct">Add Product</button>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Stock Quantity</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryTable">
+                        <!-- Inventory rows will go here -->
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Sales Tracking Section -->
+            <section id="sales" class="mb-5">
+                <h2>Sales Tracking</h2>
+                <p>Track your sales and revenue.</p>
+                <div id="salesChart" style="height: 400px;"></div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports" class="mb-5">
+                <h2>Generate Reports</h2>
+                <p>View and download sales reports.</p>
+                <button class="btn btn-primary">Download Report</button>
+            </section>
+
+
+
+
+
+
+
+
+
+
+            // Fetch appointments for the logged-in business owner
+            exports.getAppointments = async (req, res) => {
+                console.log('Inside getAppointments controller');
+                try {
+                    console.log('User email:', req.session.user.email); // Debugging session email
+                    
+                    // Fetch the business_id based on the logged-in user's email
+                    const businessData = await new Promise((resolve, reject) => {
+                        const query = 'SELECT business_id FROM businesses WHERE email = ?';
+                        db.query(query, [req.session.user.email], (err, results) => {
+                            if (err) {
+                                console.error('Error fetching business_id:', err);
+                                return reject(err);
+                            }
+                            console.log('Business Data:', results); // Check if business_id is returned
+                            resolve(results[0]);
+                        });
+                    });
+            
+                    if (!businessData || !businessData.business_id) {
+                        return res.status(404).json({ message: 'Business not found' });
+                    }
+            
+                    const businessId = businessData.business_id;
+            
+                    // Fetch appointments for the specific business
+                    const query = `
+                        SELECT a.appointment_id, c.first_name, c.last_name, a.service_name, a.appointment_date, a.status
+                        FROM appointments a
+                        JOIN customers c ON a.customer_id = c.customer_id
+                        WHERE a.business_id = ?
+                        ORDER BY a.appointment_date DESC
+                    `;
+                    const appointments = await new Promise((resolve, reject) => {
+                        db.query(query, [businessId], (err, results) => {
+                            if (err) {
+                                console.error('Error fetching appointments:', err);
+                                return reject(err);
+                            }
+                            console.log('Appointments:', results); // Log appointments data
+                            resolve(results);
+                        });
+                    });
+            
+                    console.log('Query Result:', appointments); // Log the full result to check the structure
+            
+                    // Check if there are rows returned in the _rows property
+                    if (appointments.length === 0) {
+                        return res.status(404).json({ message: 'No appointments found for this business' });
+                    }
+            
+                    console.log('Appointments:', appointments); // Log appointments data
+            
+            
+                    res.json(appointments);
+                } catch (error) {
+                    console.error('Error fetching appointments:', error);
+                    res.status(500).json({ error: 'Error fetching appointments' });
+                }
+            };
+
+
+
+
+
+
+<script>
+        const stars = generateStars(business.average_rating);
+
+        // Function to generate stars based on rating
+        function generateStars(rating) {
+        const fullStars = Math.floor(rating);
+        const emptyStars = 5 - fullStars;
+        let stars = '';
+
+        for (let i = 0; i < fullStars; i++) {
+            stars += '★';
+        }
+        for (let i = 0; i < emptyStars; i++) {
+            stars += '☆';
+        }
+        return stars;
+        }
+        
+        document.addEventListener("DOMContentLoaded", async function() {
+            const businessId = window.location.pathname.split("/").pop();  // Extract businessId from URL
+            console.log("Business ID:", businessId);  // Log the extracted business ID
+    
+            try {
+                const response = await fetch(`/customers/api/business/${businessId}`);
+                const data = await response.json();
+                
+                console.log('Fetched Business Data:', data); // Debugging line to see the structure
+                
+                if (data.business) {  // Ensure business data exists
+                    // Update the page with business data
+                    document.getElementById('businessLogo').src = data.business.logo_image_url || '/Images/default-logo.png';
+                    document.getElementById('businessName').textContent = data.business.business_name;
+                    document.getElementById('businessDescription').textContent = data.business.business_description;
+                    document.getElementById('businessLocation').textContent = data.business.location;
+                    document.getElementById('businessHours').textContent = `${data.business.opening_time} - ${data.business.closing_time}`;
+                    document.getElementById('businessRating').textContent = `${data.business.rating || 0} / 5`;
+    
+                    // Display reviews
+                    const reviewsList = document.getElementById('reviewsList');
+                    data.reviews.forEach(review => {
+                        const reviewItem = document.createElement('li');
+                        reviewItem.textContent = `${review.rating} stars - ${review.review_txt}`;
+                        reviewsList.appendChild(reviewItem);
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching business data:', error);
+            }
+        });
+    </script>

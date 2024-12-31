@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartSmart</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/Images/Favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Images/Favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a class="logopic" href="#">
+                <img src="/Images/Logo.png" alt="Website logo: StartSmart" width="180" height="180">
+            </a>
+            <a href="/">Home</a></li>
+            <div class="dropdown">
+                <a href="#" class="dropdown-button">Register</a>
+                <div class="dropdown-content">
+                    <a href="/auth/registerBusiness">For Businesses</a>
+                    <a href="/auth/registerCustomer">For Customers</a>
+                </div>
+            </div>
+            <a href="/auth/login">Login</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="welcome">
+            <h2>Welcome to StartSmart</h2>
+            <p>
+                The must-have web app for small business owners to get discovered and manage their businesses better.
+            </p>
+            <p>
+                Not a business owner? Don't worry we've got you covered too. Discover these businesses and make your life easier. All your favourite hidden gems in one place😉.
+            </p>
+        </section>
+
+        <section id="features">
+            <h2>Key Features</h2>
+            <h3>For Business Owners:</h3>
+            <div class="features-container">
+                <div class="feature">
+                    <img class="icon" src="/Images/Icons/business-directory.png">
+                    <h4>Business Directory</h4>
+                    <p>List your business profile and get discovered by customers.</p>
+                </div>
+                <div class="feature">
+                    <img class="icon" src="/Images/Icons/inventory-management.png">
+                    <h4>Inventory Management</h4>
+                    <p>Track your products, manage quantities, and generate sales reports.</p>
+                </div>
+                <div class="feature">
+                    <img class="icon" src="/Images/Icons/online-store.png">
+                    <h4>Online Store</h4>
+                    <p>Sell your products online with secure payment integration.</p>
+                </div>
+            </div>
+            <h3>For Customers:</h3>
+            <div class="features-container">
+                <div class="feature">
+                    <img class="icon" src="/Images/Icons/business-directory.png">
+                    <h4>Business Directory</h4>
+                    <p>Discover your new shopping hotspots for your everyday needs.</p>
+                </div>
+                <div class="feature">
+                    <img class="icon" src="/Images/Icons/online-store.png">
+                    <h4>Online Store</h4>
+                    <p>Don't want to leave your home? You can get what you need from the comfort of your home</p>
+                </div>
+                <div class="feature">
+                    <img class="icon" src="/Images/Icons/chat.png">
+                    <h4>In-App Messaging</h4>
+                    <p>Not sure about what you need? Contact the store owners to answer all your questions</p>
+                </div>
+                <div class="feature">
+                    <img class="icon" src="/Images/Icons/schedule.png">
+                    <h4>Appointment Scheduling</h4>
+                    <p>Book your appointments from the app</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 StartSmart. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        const dropdownButton = document.querySelector('.dropdown-button');
+        const dropdownContent = document.querySelector('.dropdown-content');
+
+        dropdownButton.addEventListener('click', () => {
+            dropdownContent.classList.toggle('show');
+        });
+        
+    document.addEventListener('click', (event) => {
+        if (!dropdownButton.contains(event.target) && !dropdownContent.contains(event.target)) {
+            dropdownContent.classList.remove('show');
+        }
+    });
+});
+
+    </script>
+</body>
+</html>

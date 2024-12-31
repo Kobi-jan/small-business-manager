@@ -1,0 +1,153 @@
+/* General body and theme */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header styles */
+header {
+    background-color: #a61c40; /* Same as app theme */
+    color: white;
+    padding: 20px 0;
+    margin-bottom: 20px;
+    padding-right: 20px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    padding: 0 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 1.2rem;
+}
+
+nav a:hover {
+    color: #c3a532; /* Hover color that matches your theme */
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background-color: #a61c40; /* Same as header */
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed at the center of the screen */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full screen */
+    height: 100%; /* Full screen */
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+}
+
+/* Modal content */
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-height: auto;
+    max-width: 500px;
+    text-align: center;
+}
+
+/* Close button */
+.close-btn {
+    color: #aaa;
+    font-size: 35px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Modal image */
+.modal-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+#addToCartModalBtn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#addToCartModalBtn:hover {
+    background-color: #218838;
+}
+
+/* Cart Item */
+.cart-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.cart-item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.cart-item-details {
+    flex-grow: 1;
+    margin-left: 15px;
+}
+
+.remove-item-btn {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Cart Summary */
+#cartSummary {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+#checkoutBtn {
+    background-color: green;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}

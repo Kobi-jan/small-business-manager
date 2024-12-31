@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Store | StartSmart</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/Images/Favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Images/Favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="/css/onlineStoreCustomer.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a class="logopic" href="/">
+                <img src="/Images/Logo.png" alt="Website logo: StartSmart" width="180" height="180">
+            </a>
+            <a href="/customers/dashboard">Dashboard</a>
+            <a href="/customers/viewAppointments">Appointments</a>
+            <a href="/customers/reviews">Review History</a>
+            <a href="/customers/store">Online Store</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </header>
+
+    <!-- Online Store Section -->
+    <!-- Product Search -->
+    <section id="search">
+        <input type="text" id="productSearch" placeholder="Search for products..." />
+        <button id="closeDropdown" class="close-button">X</button>
+        <!-- Dropdown for search results -->
+        <div id="searchResultsDropdown" class="dropdown">
+            <div id="searchResultsContainer"></div>
+        </div>
+    </section>
+
+    <section class="online-store">
+        <h2>Browse Products</h2>
+        <div id="productList">
+            <!-- Product items will be dynamically populated here -->
+        </div>
+
+        <div id="cartSummary">
+            <a href="/customers/cart" id="viewCartBtn">View Cart</a>
+        </div>
+    </section>
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close-btn">&times;</span>
+            <img id="modalProductImage" class="modal-image" />
+            <h3 id="modalProductName"></h3>
+            <p id="modalProductPrice"></p>
+            <p id="modalProductDescription"></p>
+            <p id="modalSellerName"></p>
+            <button id="addToCartModalBtn">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 StartSmart. All rights reserved.</p>
+    </footer>
+
+    <script src="/js/customer/onlineStore.js"></script>
+</body>
+</html>

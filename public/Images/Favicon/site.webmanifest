@@ -1,0 +1,20 @@
+{
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "icons": [
+      {
+        "sizes": "192x192",
+        "src": "/images/Favicon/android-chrome-192x192.png",
+        "type": "image/png"
+      },
+      {
+        "sizes": "512x512",
+        "src": "/images/Favicon/android-chrome-512x512.png",
+        "type": "image/png"
+      }
+    ],
+    "name": "StartSmart",
+    "short_name": "SS",
+    "theme_color": "#a61c40"
+  }
+  

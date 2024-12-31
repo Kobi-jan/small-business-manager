@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartSmart</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/Images/Favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Images/Favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="/css/authStyle.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a class="logopic" href="/">
+                <img src="/Images/Logo.png" alt="Website logo: StartSmart" width="180" height="180">
+            </a>
+            <a href="/">Home</a></li>
+            <div class="dropdown">
+                <a href="#" class="dropdown-button">Register</a>
+                <div class="dropdown-content">
+                    <a href="/auth/registerBusiness">For Businesses</a>
+                    <a href="/auth/registerCustomer">For Customers</a>
+                </div>
+            </div>
+            <a href="/auth/login">Login</a>
+        </nav>
+    </header>
+    <div class="container">
+        <form id="loginForm">
+            <h1>Login</h1>
+            <div id="errorMessages" class="error-message"></div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+            <div id="errorMessage" style="color: red;"></div>
+
+            <p>Don't have an account? <a href="/auth/registerBusiness">Register your business here</a> or 
+                <a href="/auth/registerCustomer">Register as a customer</a></p>
+        </form>
+        
+    </div>
+
+    <footer>
+        <p>&copy; 2024 TeleHealth. All rights reserved.</p>
+        </div>
+        <p>Contact us: contact@telehealth.com</p>
+    </footer>
+
+    <script src="/js/auth.js"></script>
+</body>
+</html>

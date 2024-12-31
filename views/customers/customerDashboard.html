@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartSmart Dashboard</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/Images/Favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Images/Favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="/css/customerStyle.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a class="logopic" href="/">
+                <img src="/Images/Logo.png" alt="Website logo: StartSmart" width="180" height="180">
+            </a>
+            <!-- Business Search and Account Sections -->
+        <section id="search">
+            <input type="text" id="businessSearch" placeholder="Search for businesses..." />
+            <!-- Dropdown for search results -->
+            <div id="searchResultsDropdown" class="dropdown">
+                <div id="searchResultsContainer"></div>
+                <button id="closeDropdown" class="close-button">X</button>
+            </div>
+        </section>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Featured Businesses Section -->
+        <section id="featuredBusinesses">
+            <h2>Featured Businesses</h2>
+            <div id="featuredBusinessesCarousel" class="carousel-container">
+              <div class="carousel-slide">
+                <!-- Businesses will be added dynamically here -->
+              </div>
+              <button class="carousel-button prev" onclick="moveCarousel('prev')">&#10094;</button>
+              <button class="carousel-button next" onclick="moveCarousel('next')">&#10095;</button>
+            </div>
+          </section>
+
+          <!-- Features Section -->
+           <section class="features">
+                <h2>Features</h2>
+                <div class="dashboard-links">
+                    <a href="/customers/viewAppointments" class="feature-card">
+                        <img class="dash-pic" src="/Images/Icons/schedule.png" alt="Appointments">
+                        <p>Appointments</p>
+                    </a>
+                    <a href="/customers/reviews" class="feature-card">
+                        <img class="dash-pic" src="/Images/Icons/review.png" alt="Reviews">
+                        <p>Review History</p>
+                    </a>
+                    <a href="/customers/store" class="feature-card">
+                        <img class="dash-pic" src="/Images/Icons/online-store.png" alt="Online Store">
+                        <p>Online Store</p>
+                    </a>
+                </div>
+            </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 StartSmart. All rights reserved.</p>
+    </footer>
+
+    <script src="/js/customer/customer.js"></script>
+</body>
+</html>

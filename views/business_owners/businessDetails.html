@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartSmart</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/Images/Favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Images/Favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="/css/ownerStyle.css">
+</head>
+
+<body>
+    <header>
+        <h1 style="color: white; margin:10px">Complete Your Profile</h1>
+    </header>
+    <main>
+        <div id="profileSetup" class="setup">
+            <p style="font-size: 1.8rem; margin: 10px;">
+                Provide the following details to complete your profile setup.
+            </p>
+            <div id="errorMessages" style="color: red; display: none;"></div>
+            <form id="profileSetupForm" enctype="multipart/form-data">
+                <label for="description">Business Description/ Bio:</label>
+                <textarea id="description" name="description" required></textarea>
+
+                <label for="location">Location (If you do not have a physical store, choose 'Online'):</label>
+                <select id="location" name="location" required>
+                    <option value="online">Online</option>
+                </select>
+
+                <label for="openingTime">Opening Time:</label>
+                <input type="time" id="openingTime" name="openingTime" required>
+
+                <label for="closingTime">Closing Time:</label>
+                <input type="time" id="closingTime" name="closingTime" required>
+
+                <label for="logo">Logo Image (Upload your business logo):</label>
+                <input type="file" id="logo" name="logo" accept="image/jpeg, image/png" required>
+
+                <div id="errorMessages" style="color: red; display: none;"></div>
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 StartSmart. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const counties = [
+            "Baringo", "Bomet", "Bungoma", "Busia", "Elgeyo Marakwet", "Embu", "Garissa", "Homa Bay", 
+            "Isiolo", "Kajiado", "Kakamega", "Kiambu", "Kilifi", "Kirinyaga", "Kisii", "Kisumu", 
+            "Kitui", "Kwale", "Laikipia", "Lamu", "Machakos", "Makueni", "Mandera", "Marsabit", 
+            "Meru", "Migori", "Mombasa", "Murang'a", "Nairobi", "Nakuru", "Nandi", "Narok", "Nyamira", 
+            "Nyandarua", "Nyanza", "Samburu", "Siaya", "Taita Taveta", "Tana River", "Tharaka Nithi", 
+            "Trans Nzoia", "Turkana", "Uasin Gishu", "Vihiga", "Wajir", "West Pokot"
+        ];
+
+        const locationSelect = document.getElementById("location");
+
+        counties.forEach(county => {
+            const option = document.createElement("option");
+            option.value = county;
+            option.textContent = county;
+            locationSelect.appendChild(option);
+        });
+    </script>
+    <script src="/js/owners/owner.js"></script>
+
+
+</body>

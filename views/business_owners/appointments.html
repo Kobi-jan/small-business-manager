@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartSmart</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/Images/Favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Images/Favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="/css/ownerStyle.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a class="logopic" href="/">
+                <img src="/Images/Logo.png" alt="Website logo: StartSmart" width="180" height="180">
+            </a>
+            <a href="/owner/dashboard">Dashboard</a>
+            <a href="/owner/inventorymanagement">Inventory Management</a>
+            <a href="/owner/sales-and-reports">Sales and Reports</a>
+            <a href="/owner/store">Online Store</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <div class="appointments-container">
+            <h1>Appointments</h1>
+            <!-- Filter Section -->
+<div id="filter-section">
+    <label for="status-filter">Status:</label>
+    <select id="status-filter">
+        <option value="">Select Status</option>
+        <option value="pending">Pending</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="canceled">Canceled</option>
+    </select>
+
+    <button id="filter-btn">Apply Filters</button>
+</div>
+
+            <div id="appointments-list"></div>
+        </div>
+        <!-- Reschedule Modal -->
+<div id="reschedule-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h3>Reschedule Appointment</h3>
+        <form id="reschedule-form">
+            <label for="new-date">Select New Date and Time:</label>
+            <input type="datetime-local" id="new-date" required />
+            <input type="hidden" id="appointment-id" />
+            <button type="submit">Save Changes</button>
+            <button type="button" id="close-modal">Cancel</button>
+        </form>
+    </div>
+</div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 StartSmart. All rights reserved.</p>
+    </footer>
+    <script src="/js/owners/appointments.js"></script>
+</body>
+</html>

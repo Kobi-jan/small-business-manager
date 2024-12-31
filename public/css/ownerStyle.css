@@ -1,0 +1,741 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #a61c40;
+    color: white;
+    padding: 20px 0;
+    margin-bottom: 20px;
+    padding-right: 20px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    padding: 0 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 1.2rem;
+}
+
+nav a:hover {
+    color: #c3a532;
+    text-decoration: underline;
+}
+
+h1 {
+    text-align: center;
+    color: #333333;
+    font-size: 2.5rem;
+    margin-top: 40px;
+}
+
+#profileSetupForm {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#profileSetupForm label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+    color: #444;
+}
+
+#profileSetupForm input[type="time"],
+#profileSetupForm textarea,
+#profileSetupForm input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+#profileSetupForm textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+#profileSetupForm button {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #a61c40;
+    color: white;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#profileSetupForm button:hover {
+    background-color: #c3a532;
+}
+
+select,  #profileSetupForm input[type="time"] {
+    width: 50%; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    background-color: #f9f9f9; 
+    font-size: 16px; 
+    color: #333; 
+}
+
+select:focus {
+    border-color: black; 
+    outline: none; 
+}
+
+#errorMessages {
+    margin-top: 10px;
+    color: red;
+    font-size: 0.9rem;
+    padding: 10px;
+    background-color: #f8d7da;
+    border-radius: 5px;
+    display: none;
+}
+
+footer {
+    background-color: #a61c40;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* Business Overview Section */
+.business-overview-section, .features-section, #reviews {
+    margin: 30px 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.business-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.business-logo {
+    flex: 0 0 120px; /* Fixed width for the logo */
+    margin-right: 20px;
+}
+
+.business-info {
+    flex: 1;
+}
+
+.business-overview-section h2, #reviews h2 {
+    font-size: 2rem;
+    color: #a61c40;
+    margin-bottom: 20px;
+}
+
+.business-info p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.stat-card {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    width: 30%;
+    text-align: center;
+}
+
+.stat-card h3 {
+    font-size: 2rem;
+    color: #a61c40;
+    margin-bottom: 10px;
+}
+
+.stat-card p {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/* Features Section */
+.dashboard-links {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.feature-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 23%;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    color: #333;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dash-pic {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+.feature-card p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #a61c40;
+    margin-top: 10px;
+}
+
+.feature-card:hover p {
+    color: #c3a532;
+}
+
+/* Reviews Section */
+#reviews {
+    margin: 30px 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#reviews p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+#reviewList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.review-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.review-header span {
+    font-size: 1rem;
+    color: #333;
+}
+
+.review-header span strong {
+    font-weight: bold;
+}
+
+.review-body {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.5;
+    margin-top: 10px;
+}
+
+.review-body p {
+    margin: 0;
+}
+
+.review-header .date {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* No Reviews Message */
+.no-reviews {
+    font-size: 1.2rem;
+    color: #888;
+    text-align: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+/* Appointments Container */
+.appointments-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+.appointments-container h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Table Styling */
+.appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.appointments-table th,
+.appointments-table td {
+    padding: 12px 20px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.1rem;
+}
+
+/* Table Header */
+.appointments-table th {
+    background-color: #f4f4f4;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Table Body */
+.appointments-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.appointments-table .status {
+    font-weight: bold;
+}
+
+/* Appointment Status Colors */
+.appointments-table .status.canceled {
+    color: red;
+}
+
+.appointments-table .status.pending {
+    color: #f39c12;
+}
+
+.appointments-table .status.confirmed {
+    color: #27ae60;
+}
+
+/* Action Button Styling */
+.action-btn {
+    padding: 8px 12px;
+    background-color: #ff5555;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.action-btn:hover {
+    background-color: #e74c3c;
+}
+
+/* Disabled State for Cancel Button */
+.action-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* No Appointments Message */
+#appointments-list p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+}
+
+/* General Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content label {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.modal-content input[type="datetime-local"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.modal-content button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.modal-content button[type="submit"] {
+    background-color: #a61c40;
+    color: white;
+}
+
+.modal-content button[type="button"] {
+    background-color: #f44336;
+    color: white;
+}
+
+.modal-content button:hover {
+    opacity: 0.8;
+}
+
+#filter-section {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+#filter-section label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+#filter-section select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+#filter-section button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #a61c40;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#filter-section button:hover {
+    opacity: 0.8;
+}
+
+/* Media Queries for Responsiveness */
+
+/* Small screens (max-width: 768px) */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 10px;
+    }
+
+    nav a {
+        margin: 10px 0;
+        font-size: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    #profileSetupForm {
+        max-width: 90%;
+    }
+
+    .dashboard-links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature-card {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+
+    .stats-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stat-card {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+
+    .business-details {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .business-logo {
+        flex: 0 0 100px;
+        margin-bottom: 10px;
+    }
+
+    .business-info {
+        text-align: center;
+    }
+
+    #reviews {
+        margin: 20px 10px;
+    }
+
+    .review-card {
+        width: 100%;
+    }
+    .appointments-container {
+        padding: 10px;
+    }
+
+    .appointments-container h1 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+
+    .appointments-table th, .appointments-table td {
+        padding: 8px;
+    }
+
+    .appointments-table {
+        font-size: 13px;
+    }
+
+    .appointments-table td,
+    .appointments-table th {
+        display: block;
+        width: 100%;
+        text-align: left;
+        box-sizing: border-box;
+    }
+
+    .appointments-table th {
+        background-color: #e6e6e6;
+    }
+
+    .appointments-table .status {
+        margin-top: 5px;
+    }
+
+    .appointments-table .action-btn {
+        width: 100%;
+        padding: 12px 0;
+    }
+
+    #appointments-list p {
+        font-size: 1rem;
+    }
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .modal-content h3 {
+        font-size: 1.3rem;
+    }
+
+    .modal-content input[type="datetime-local"], .modal-content button {
+        font-size: 0.9rem;
+    }
+
+    .modal-content label {
+        font-size: 0.9rem;
+    }
+    #filter-section {
+        padding: 15px;
+    }
+
+    #filter-section label {
+        font-size: 0.9rem;
+    }
+
+    #filter-section select, #filter-section button {
+        font-size: 0.9rem;
+    }
+}
+
+/* Extra Small screens (max-width: 480px) */
+@media (max-width: 480px) {
+    nav {
+        padding: 0 5px;
+    }
+
+    nav a {
+        font-size: 0.9rem;
+        margin-left: 10px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    #profileSetupForm {
+        padding: 10px;
+    }
+
+    .feature-card {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .stat-card {
+        width: 100%;
+    }
+
+    .business-logo {
+        flex: 0 0 80px;
+    }
+
+    .dashboard-links {
+        padding: 0 10px;
+    }
+    .appointments-container {
+        padding: 10px;
+    }
+
+    .appointments-container h1 {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+    }
+
+    .appointments-table th, .appointments-table td {
+        padding: 6px;
+    }
+
+    .appointments-table {
+        font-size: 12px;
+    }
+
+    .appointments-table .action-btn {
+        padding: 10px 0;
+    }
+
+    #appointments-list p {
+        font-size: 0.9rem;
+    }
+    .modal-content {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .modal-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .modal-content input[type="datetime-local"], .modal-content button {
+        font-size: 0.8rem;
+    }
+
+    .modal-content label {
+        font-size: 0.8rem;
+    }
+    #filter-section {
+        padding: 10px;
+    }
+
+    #filter-section label {
+        font-size: 0.8rem;
+    }
+
+    #filter-section select, #filter-section button {
+        font-size: 0.8rem;
+    }
+}
