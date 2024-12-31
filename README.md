@@ -119,30 +119,7 @@ StartSmart is a platform designed to help small businesses manage their operatio
 
 ## Project Structure
 
-project/ 
-├── config/ 
-│ └── db.js 
-├── controllers/ 
-│ ├── authController.js 
-│ ├── ownerController.js 
-│ └── customerController.js 
-├── middleware/ 
-├── public/ 
-│ ├── images/ 
-│ ├── css/ 
-│ └── js/ 
-├── routes/ 
-│ ├── authRoutes.js 
-│ ├── customerRoutes.js 
-│ └── ownerRoutes.js 
-├── views/ 
-│ ├── auth/ 
-│ ├── customers/ 
-│ ├── business_owner/ 
-│ └── index.html 
-├── app.js 
-└── README.md
-
+small-business-manager/ | |config/ # Configuration files (e.g., database connection) | | |db.js | |controllers/ # Controllers for handling application logic | | |authController.js | | |customerController.js | | |ownerController.js | |middleware/ # Middleware functions | | |checkProfileCompletion.js | |public/ # Public assets like CSS, images, and JavaScript | | |css/ # CSS files | | |Images/ # Images and logos | | |js/ # JavaScript files | | |uploads # Uploaded files | |routes/ # Application routes | | |authRoutes.js | | |customerRoutes.js | | |ownerRoutes.js | |views/ # HTML files for views | | |index.html | |.gitignore # Files and directories to be ignored by Git | |app.js # Entry point for the application | |README.md # Project documentation
 ---
 
 ## Setup Instructions
