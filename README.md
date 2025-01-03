@@ -63,7 +63,8 @@ Before you begin, make sure you have the following installed on your machine:
 2. **Navigate to the project folder**:
     Change to the project directory:
     ```bash
-  cd small-business-manager
+    cd small-business-manager
+  
 
 3. **Install the dependencies**:
     Run the following command to install all required packages and dependencies:
