@@ -23,8 +23,9 @@
         </nav>
     </header>
     <main>
+        <!-- Inventory Section -->
         <div id="inventory-container">
-            <!-- List of products will be dynamically loaded here -->
+            <!-- List of products will be loaded here -->
         </div>
         
         <!-- Product Details Modal -->
@@ -35,30 +36,30 @@
                 <p><strong>Price:</strong> $<span id="product-price"></span></p>
                 <p><strong>Quantity in Stock:</strong> <span id="product-quantity"></span></p>
                 <p><strong>Description:</strong> <span id="product-description"></span></p>
-                
-                <button id="edit-product-btn">Edit Product</button>
-                <button id="edit-quantity-btn">Edit Quantity</button>
+
+                <button id="edit-description-btn">Edit Description</button>
+                <button id="add-quantity-btn">Edit Quantity</button>
                 <button id="edit-price-btn">Edit Price</button>
+                <button id="delete-product-btn">Delete</button>
                 <button id="close-modal-btn">Close</button>
             </div>
         </div>
         <!-- Add Product Button -->
-<button id="add-product-btn" class="btn btn-primary">Add Product</button>
+        <button id="add-product-btn" class="btn btn-primary">Add Product</button>
 
-<!-- Modal for adding a product -->
-<div id="add-product-modal" style="display: none;">
-    <form enctype="multipart/form-data" method="POST" action="/owner/api/add-product" id="add-product-form">
-        <input type="text" id="product-name" name="product_name" placeholder="Product Name" required />
-        <input type="number" id="product-price" name="price" placeholder="Price" step="0.01" required />
-        <input type="number" id="product-quantity" name="quantity_in_stock" placeholder="Quantity in Stock" required />
-        <textarea id="product-description" name="product_description" placeholder="Product Description" required></textarea>
-        <input type="file" id="product-logo" name="logo" accept="image/*" required />
-        <button type="submit" id="submit-product-btn" class="btn btn-primary">Add Product</button>
-    </form>
-    <button type="button" id="close-add-product-modal-btn">Close</button>
-    
-    
-</div>
+        <!-- Modal for adding a product -->
+        <div id="add-product-modal" style="display: none;">
+            <form enctype="multipart/form-data" method="POST" action="/owner/api/add-product" id="add-product-form">
+                <input type="text" id="add-product-name" name="product_name" placeholder="Product Name" required />
+                <input type="number" id="add-product-price" name="price" placeholder="Price" step="0.01" required />
+                <input type="number" id="add-product-quantity" name="quantity_in_stock" placeholder="Quantity in Stock" required />
+                <textarea id="add-product-description" name="product_description" placeholder="Product Description" required></textarea>
+                <input type="file" id="add-product-logo" name="logo" accept="image/*" required />
+                <button type="submit" id="submit-product-btn" class="btn btn-primary">Add Product</button>
+            </form>
+            <button type="button" id="close-add-product-modal-btn">Close</button>   
+        </div>
+
 
     </main>
     <footer>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartSmart</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/Images/Favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Images/Favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="/css/ownerStyle2.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a class="logopic" href="/">
+                <img src="/Images/Logo.png" alt="Website logo: StartSmart" width="180" height="180">
+            </a>
+            <a href="/owner/dashboard">Dashboard</a>
+            <a href="/owner/sales-and-reports">Sales and Reports</a>
+            <a href="/owner/store">Online Store</a>
+            <a href="/owner/appointments">Appointments</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <!-- Messages section-->
+        <section id="messages-section">
+            <div class="messages-container">
+                <!-- Left Panel: Conversation List -->
+                <div class="conversation-list">
+                    <h2>Conversations</h2>
+                    <ul id="conversationList">
+                        <!-- Dynamically populated with JS -->
+                    </ul>
+                </div>
+    
+                <!-- Right Panel: Chat Area -->
+                <div class="chat-area">
+                    <div id="chatHeader" class="chat-header">
+                        <h3 id="chatWith">Chat with: </h3>
+                    </div>
+                    <div id="chatMessages" class="chat-messages">
+                        <!-- Dynamically populated with JS -->
+                    </div>
+                    <div class="chat-input">
+                        <textarea id="chatInput" placeholder="Type your message..."></textarea>
+                        <button id="sendMessageBtn">Send</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+  
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 StartSmart. All rights reserved.</p>
+    </footer>
+
+    <script src="/js/owners/messages.js"></script>
+</body>
+</html>

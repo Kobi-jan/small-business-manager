@@ -1,7 +1,6 @@
-
 module.exports = function checkProfileCompletion(req, res, next) {
     if (req.path === '/owner/dashboard/complete-profile') {
-        return next(); // Skip middleware for profile setup route
+        return next(); 
     }
 
     if (!req.session.user) {

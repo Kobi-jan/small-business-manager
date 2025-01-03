@@ -38,63 +38,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// document.getElementById('leaveReviewBtn').addEventListener('click', function() {
-//     const rating = document.querySelector('input[name="rating"]:checked'); // Assuming you have radio buttons for rating
-//     const reviewText = document.getElementById('reviewText').value;  // Assuming a text area for review text
-  
-//     if (!rating) {
-//       alert('Please select a rating.');
-//       return;
-//     }
-  
-//     const reviewData = {
-//       rating: rating.value,
-//       review_txt: reviewText || null  // If reviewText is empty, set it as null
-//     };
-  
-//     const businessId = window.location.pathname.split('/').pop();  // Extract businessId from URL
-  
-//     fetch(`/customers/api/reviews/${businessId}`, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify(reviewData)
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//       // Display the updated reviews
-//       displayReviews(data.reviews);
-//     })
-//     .catch(err => console.error('Error submitting review:', err));
-//   });
-  
-//   function displayReviews(reviews) {
-//     const reviewsList = document.getElementById('reviewsList');
-//     reviewsList.innerHTML = ''; // Clear existing reviews
-    
-//     reviews.forEach(review => {
-//       const reviewItem = document.createElement('li');
-//       reviewItem.classList.add('review-item');
-//       reviewItem.innerHTML = `
-//         <strong>(${review.rating} Stars)</strong> 
-//         <br><strong>${review.first_name}</strong> 
-//         ${review.review_txt ? `<p>${review.review_txt}</p>` : ''}
-//         <br><small>${new Date(review.created_at).toLocaleString()}</small>
-//       `;
-//       reviewsList.appendChild(reviewItem);
-//     });
-//   }
-  
-
-  let selectedRating = null; // To store the selected rating
+  let selectedRating = null; 
 
   // Handle star clicks to set the rating
   document.querySelectorAll('.star').forEach(star => {
       star.addEventListener('click', function() {
-          selectedRating = this.getAttribute('data-value'); // Get the value of the clicked star
-  
-          // Update the stars' appearance
+          selectedRating = this.getAttribute('data-value'); 
+
           updateStars(selectedRating);
       });
   });
@@ -111,21 +61,20 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
   
-  // Handle submit review button click
+  // Handle submit review 
   document.getElementById('leaveReviewBtn').addEventListener('click', async function() {
-    const reviewText = document.getElementById('reviewText').value; // Get review text
-
+    const reviewText = document.getElementById('reviewText').value; 
     if (!selectedRating) {
         alert('Please select a rating.');
         return;
     }
 
     const review = {
-        rating: selectedRating, // Use the selected rating
-        review_txt: reviewText.trim() || null // Optional review text
+        rating: selectedRating, 
+        review_txt: reviewText.trim() || null 
     };
 
-    const businessId = window.location.pathname.split("/").pop(); // Extract businessId from URL
+    const businessId = window.location.pathname.split("/").pop(); 
 
     try {
         // Send the new review to the server
@@ -151,3 +100,41 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('An error occurred. Please try again later.');
     }
 });
+
+
+
+document.getElementById('sendMessageBtn').addEventListener('click', async function() {
+    const messageText = document.getElementById('messageText').value.trim();
+    if (messageText) {
+        const businessId = window.location.pathname.split("/").pop(); 
+        const message = {
+            message_text: messageText,
+        };
+
+        try {
+            const response = await fetch(`/customers/api/sendMessage/${businessId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(message),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                document.getElementById('messageText').value = '';  
+                fetchMessages();  
+            } else {
+                alert('Error sending message.');
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+            alert('An error occurred while sending the message.');
+        }
+    } else {
+        alert('Please enter a message.');
+    }
+});
+
+

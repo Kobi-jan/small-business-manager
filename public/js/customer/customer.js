@@ -1,8 +1,7 @@
 // Function to populate the carousel with businesses
 function populateCarousel(businesses) {
 const carouselSlide = document.querySelector('.carousel-slide');
-carouselSlide.innerHTML = ''; // Clear previous content
-console.log("Businesses: ", businesses);
+carouselSlide.innerHTML = ''; 
 
 businesses.forEach(business => {
   const businessDiv = document.createElement('div');
@@ -54,7 +53,6 @@ const totalItems = carouselSlide.children.length;
 const itemsToShow = 3;
 const slideWidth = carouselSlide.firstElementChild.offsetWidth;
 
-// Adjust carousel width
 carouselSlide.style.width = `${totalItems * slideWidth}px`;
 
 // Function to move the carousel
@@ -91,7 +89,7 @@ resultsDiv.innerHTML = ''; // Clear previous results
 
 if (businesses.length === 0) {
     resultsDiv.innerHTML = '<p>No businesses found.</p>';
-    dropdown.style.display = 'none'; // Hide dropdown if no results
+    dropdown.style.display = 'none'; 
     return;
 }
 
@@ -114,15 +112,15 @@ businesses.forEach(business => {
   resultsDiv.appendChild(businessDiv);
 });
 
-dropdown.style.display = 'block'; // Show the dropdown with results
+dropdown.style.display = 'block'; 
 }
 
-// Close dropdown when clicking the "X" button
+
 document.getElementById('closeDropdown').addEventListener('click', function() {
 document.getElementById('searchResultsDropdown').style.display = 'none';
 });
 
-// Fetch featured businesses from the server
+// Fetch featured businesses 
 fetch('/customers/featured')
 .then(response => response.json())
 .then(data => {

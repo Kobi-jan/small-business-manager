@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartSmart</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/Images/Favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Images/Favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="/css/customerStyle.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a class="logopic" href="/">
+                <img src="/Images/Logo.png" alt="Website logo: StartSmart" width="180" height="180">
+            </a>
+            <a href="/customers/dashboard">Dashboard</a>
+            <a href="/customers/viewAppointments">Appointments</a>
+            <a href="/customers/reviews">Review History</a>
+            <a href="/customers/store">Online Store</a>
+            <a href="/customers/messages">Messages</a>
+            <a href="/customers/order-history">Order History</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <!-- Order History Section -->
+    <section class="order-history">
+        <h2>Your Order History</h2>
+        <div id="orderHistoryContainer">
+            <!-- Dynamically populated here -->
+        </div>
+        <div id="errorMessage" style="display: none;">
+            <p>No orders found for this customer.</p>
+        </div>
+
+        <!-- Order Details Modal -->
+<div id="orderDetailsModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeModalBtn">&times;</span>
+        <h3>Order Details</h3>
+        <table id="orderItemsTable">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <p>Total Amount: <span id="modalTotalAmount"></span></p>
+    </div>
+</div>
+    </section>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 StartSmart. All rights reserved.</p>
+    </footer>
+
+    <script>
+        async function fetchOrderHistory() {
+    const orderHistoryContainer = document.getElementById('orderHistoryContainer');
+    const errorMessage = document.getElementById('errorMessage');
+
+    try {
+        const response = await fetch('/customers/api/order-history');
+        const data = await response.json();
+
+        if (data.message) {
+            // If no orders found
+            errorMessage.style.display = 'block';
+            orderHistoryContainer.style.display = 'none';
+        } else {
+            // If orders are found
+            errorMessage.style.display = 'none';
+            orderHistoryContainer.style.display = 'block';
+
+            // Clear the container before re-rendering
+            orderHistoryContainer.innerHTML = '';
+
+            // Create a table to display orders
+            const table = document.createElement('table');
+            table.classList.add('order-table');
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Total Amount</th>
+                        <th>Order Date</th>
+                        <th>Payment Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            `;
+            const tbody = table.querySelector('tbody');
+
+            data.forEach(order => {
+                const totalAmount = parseFloat(order.total_amount).toFixed(2);
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.order_id}</td>
+                    <td>$${totalAmount}</td>
+                    <td>${new Date(order.order_date).toLocaleDateString()}</td>
+                    <td>${order.payment_status}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Append the table to the order history container
+            orderHistoryContainer.appendChild(table);
+        }
+    } catch (error) {
+        console.error('Error fetching order history:', error);
+        errorMessage.textContent = 'There was an error fetching your order history. Please try again later.';
+        errorMessage.style.display = 'block';
+    }
+}
+
+        // Function to fetch order items for the selected order
+async function fetchOrderItems(orderId) {
+    try {
+        const response = await fetch(`/customers/api/order-items/${orderId}`);
+        const data = await response.json();
+
+        if (data.message) {
+            alert('Error fetching order items');
+        } else {
+            // Populate the modal with order item details
+            const orderItemsTable = document.getElementById('orderItemsTable').querySelector('tbody');
+            const modalTotalAmount = document.getElementById('modalTotalAmount');
+            orderItemsTable.innerHTML = ''; 
+
+            let totalAmount = 0;
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.product_name}</td>
+                    <td>${item.quantity}</td>
+                    <td>$${item.price}</td>
+                    <td>$${(item.quantity * item.price).toFixed(2)}</td>
+                `;
+                orderItemsTable.appendChild(row);
+
+                totalAmount += item.quantity * item.price;
+            });
+
+            // Set the total amount in the modal
+            modalTotalAmount.textContent = totalAmount.toFixed(2);
+
+            // Show the modal
+            document.getElementById('orderDetailsModal').style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error fetching order items:', error);
+        alert('There was an error fetching the order items.');
+    }
+}
+
+// Close modal when clicking the close button
+document.getElementById('closeModalBtn').addEventListener('click', () => {
+    document.getElementById('orderDetailsModal').style.display = 'none';
+});
+
+// Close modal when clicking outside the modal content
+window.addEventListener('click', (event) => {
+    if (event.target == document.getElementById('orderDetailsModal')) {
+        document.getElementById('orderDetailsModal').style.display = 'none';
+    }
+});
+
+// Add event listener to table rows
+document.getElementById('orderHistoryContainer').addEventListener('click', (event) => {
+    const row = event.target.closest('tr');
+    if (row) {
+        const orderId = row.querySelector('td:first-child').textContent; 
+        fetchOrderItems(orderId);  
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', fetchOrderHistory);
+
+    </script>
+</body>
+</html>

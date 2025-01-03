@@ -1,6 +1,6 @@
 const express = require('express');
-const multer = require('multer');
 const path = require('path');
+const multer = require('multer');
 const ownerController = require('../controllers/ownerController');
 const checkProfileCompletion = require('../middleware/checkProfileCompletion');
 
@@ -8,7 +8,7 @@ const router = express.Router();
 
 console.log('Owner routes are loaded');
 
-// Configure multer for file uploads (this is done at the top for better clarity)
+// Configure multer for file uploads 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, 'public/uploads/'),
     filename: (req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`),
@@ -35,24 +35,22 @@ router.get('/business-details', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/business_owners/businessDetails.html'));
 });
 
-// Route for completing the profile setup (POST to /complete-profile)
+// Completing the profile 
 router.post('/complete-profile', (req, res, next) => {
-    // Handle file upload and profile completion
     upload(req, res, (err) => {
         if (err) {
             return res.status(400).json({ message: err.message });
         }
-        // Proceed to the controller if no errors
         ownerController.completeProfile(req, res, next);
     });
 });
 
-// Route to serve the owner dashboard
+// Get the dashboard page
 router.get('/dashboard', checkProfileCompletion, (req, res) => {
     res.sendFile(path.join(__dirname, '../views/business_owners/ownerDashboard.html'));
 });
 
-// API route to check if the profile is complete
+// Check if the profile is complete
 router.get('/api/profile-status', (req, res) => {
     if (req.session.user) {
         return res.json({ isProfileComplete: req.session.user.isProfileComplete });
@@ -60,30 +58,31 @@ router.get('/api/profile-status', (req, res) => {
     res.status(401).json({ message: 'Unauthorized' });
 });
 
-// Route to get Business Overview details
+// Get Business overview details
 router.get('/api/business-overview', ownerController.getBusinessOverview);
 
 
-// Route to get reviews for the business
-router.get('/api/reviews', (req, res) => {
-    res.json({ message: 'Reviews endpoint is working!' });
-});
+// Get reviews for the business
+router.get('/api/reviews', ownerController.getReviews);
 
-// Route to serve appointments page
+// Serve appointments page
 router.get('/appointments', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/business_owners/appointments.html'));
 });
 
-// Endpoint to get appointments
+// Get appointments
 router.get('/api/get-appointments', ownerController.getAppointments);
 
-// Route to handle canceling an appointment
+// Canceling an appointment
 router.post('/api/cancel-appointment/:appointmentId', ownerController.cancelAppointment);
 
-// Route to reschedule an appointment
-router.post('/api/reschedule-appointment', ownerController.rescheduleAppointment);
+// Confirm an appointment
+router.post('/api/confirm-appointment/:appointmentId', ownerController.confirmAppointment);
 
-// Route to serve inventory page
+// Complete an appointment
+router.post('/api/complete-appointment/:appointmentId', ownerController.completeAppointment);
+
+// Serve inventory page
 router.get('/inventorymanagement', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/business_owners/inventory.html'));
 });
@@ -93,22 +92,58 @@ router.get('/api/get-products', ownerController.getProducts);
 
 // Add a new product with image upload
 router.post('/api/add-product', (req, res, next) => {
-    // Handle file upload using multer
     upload(req, res, (err) => {
         if (err) {
             return res.status(400).json({ message: err.message });
         }
-
-        // If no error, pass the request to the controller
         ownerController.addProduct(req, res, next);
     });
 });
 
+// Update a product description
+router.put('/api/update-product-description/:product_id', ownerController.updateProductDescription);
 
-// // Update a product
-// router.put('/api/products', ownerController.updateProduct);
+// Update a product price
+router.put('/api/update-product-price/:product_id', ownerController.updateProductPrice);
 
-// // Delete a product
-// router.delete('/api/products/:product_id', ownerController.deleteProduct);
+// Add quantity to a product
+router.put('/api/update-quantity/:product_id', ownerController.addQuantityInStock);
+
+// Delete a product
+router.delete('/api/products/:product_id', ownerController.deleteProduct);
+
+// Serve the sales report page
+router.get('/sales-and-reports', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views/business_owners/sales.html'));
+});
+
+// Get sales overview data
+router.get('/api/sales-overview', ownerController.getTotalSales);
+
+// Get sales by product
+router.get('/api/sales-by-product', ownerController.getSalesByProduct);
+
+// Get graphs
+router.get('/api/sales-graphs', ownerController.getSalesGraphData);
+
+// Sales transactions
+router.get('/api/sales-transactions', ownerController.getSalesTransactions);
+
+
+
+
+
+// Route to serve messages page
+router.get('/messages', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views/business_owners/messages.html'));
+});
+
+router.get('/api/messages/conversations', ownerController.getConversations);
+
+// Route to get messages for a specific business (customerId is extracted from session)
+router.get("/api/messages/:customerId", ownerController.getMessages);
+
+// Route to send a message from the customer to a business
+router.post("/api/messages/send", ownerController.sendMessage);
 
 module.exports = router;

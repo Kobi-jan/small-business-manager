@@ -137,3 +137,499 @@ button:hover {
 #close-modal-btn {
     background-color: #dc3545;
 }
+
+.sales-header {
+    text-align: center;
+    padding: 20px;
+    background-color: #c3a532;
+    color: white;
+}
+
+.sales-tabs {
+    background-color: #fff;
+    padding: 10px 0;
+    border-bottom: 2px solid #ddd;
+}
+
+.sales-tabs ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.sales-tabs li {
+    margin: 0 15px;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+}
+
+.sales-tabs li.active {
+    background-color: #a61c40;
+    color: white;
+}
+
+.sales-tabs li:hover {
+    background-color: #e3d1b1;
+}
+
+.sales-content {
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.sales-metric {
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sales-metric h3 {
+    margin-top: 0;
+}
+
+#salesByProductTable,
+#salesTransactionsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#salesByProductTable th,
+#salesTransactionsTable th,
+#salesByProductTable td,
+#salesTransactionsTable td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+#salesByProductTable th,
+#salesTransactionsTable th {
+    background-color: #a61c40;
+    color: white;
+}
+
+#salesByProductTable tr:nth-child(even),
+#salesTransactionsTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#salesByProductTable td,
+#salesTransactionsTable td {
+    font-size: 14px;
+}
+
+select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+canvas {
+    width: 100%;
+    height: 400px;
+}
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+
+.modal-content h3 {
+    color: #a61c40;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+
+.modal-content img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    border: 2px solid #c3a532;
+    border-radius: 5px;
+}
+
+
+button {
+    background-color: #a61c40;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 150px;
+    box-sizing: border-box;
+}
+
+button:hover {
+    background-color: #c3a532;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+
+#add-product-form input,
+#add-product-form textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #c3a532;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#add-product-form input:focus,
+#add-product-form textarea:focus {
+    border-color: #a61c40;
+    box-shadow: 0 0 5px rgba(166, 28, 64, 0.5);
+}
+
+
+#submit-product-btn {
+    background-color: #c3a532;
+    color: #fff;
+    width: 100%;
+}
+
+#submit-product-btn:hover {
+    background-color: #a61c40;
+}
+
+
+#add-product-btn {
+    background-color: #c3a532;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#add-product-btn:hover {
+    background-color: #a61c40;
+}
+
+#messages-section {
+    width: 100%;
+    height: calc(100vh - 80px); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+}
+
+
+.messages-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.conversation-list {
+    width: 30%;
+    background-color: #a61c40;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.conversation-list h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #c3a532;
+    padding-bottom: 5px;
+}
+
+.conversation-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.conversation-list ul li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #c3a532;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.conversation-list ul li:hover {
+    background-color: #fff;
+    color: #a61c40;
+}
+
+
+.chat-area {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.chat-header {
+    padding: 15px;
+    background-color: #a61c40;
+    color: white;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #f4f4f4;
+    box-sizing: border-box;
+}
+
+.chat-messages p {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.message.business {
+    align-self: flex-end;
+    background-color: #dac882;
+    color: white;
+    padding: 10px;
+    border-radius: 10px 10px 0 10px;
+    max-width: 75%;
+    word-wrap: break-word;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.message.customer {
+    align-self: flex-start;
+    background-color: #ebd3d9;
+    color: #333;
+    padding: 10px;
+    border-radius: 10px 10px 10px 0;
+    max-width: 75%;
+    word-wrap: break-word;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border-top: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.chat-input textarea {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #c3a532;
+    border-radius: 5px;
+    resize: none;
+    font-size: 14px;
+}
+
+.chat-input textarea:focus {
+    border-color: #a61c40;
+    box-shadow: 0 0 5px rgba(166, 28, 64, 0.5);
+}
+
+.chat-input button {
+    margin-left: 10px;
+    background-color: #a61c40;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.chat-input button:hover {
+    background-color: #c3a532;
+}
+
+/* Responsive Design */
+  /* Small screens (max-width: 768px) */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 10px;
+    }
+
+    nav a {
+        margin: 10px 0;
+        font-size: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
+
+    button {
+        padding: 10px;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    #add-product-form input,
+    #add-product-form textarea {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    #submit-product-btn {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    .messages-container {
+        flex-direction: column;
+    }
+
+    .conversation-list {
+        width: 100%;
+        height: 40%;
+    }
+
+    .chat-area {
+        width: 100%;
+        height: 60%;
+    }
+    .sales-tabs ul {
+        flex-direction: column;
+    }
+
+    .sales-tabs li {
+        margin: 10px 0;
+    }
+
+    #salesByProductTable th, #salesByProductTable td, #salesTransactionsTable th, #salesTransactionsTable td {
+        padding: 8px;
+    }
+
+    select {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+/* Extra Small screens (max-width: 480px) */
+@media (max-width: 480px) {
+    nav {
+        padding: 0 5px;
+    }
+
+    nav a {
+        font-size: 0.9rem;
+        margin-left: 10px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+    .modal-content h3 {
+        font-size: 1.2rem;
+    }
+
+    button {
+        font-size: 0.8rem;
+    }
+
+    #add-product-form input,
+    #add-product-form textarea {
+        font-size: 0.8rem;
+    }
+    .conversation-list h2 {
+        font-size: 1.2rem;
+    }
+
+    .chat-header {
+        font-size: 1rem;
+    }
+
+    .chat-input textarea {
+        font-size: 12px;
+    }
+
+    .chat-input button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+    .sales-metric {
+        font-size: 14px;
+        padding: 10px;
+    }
+}

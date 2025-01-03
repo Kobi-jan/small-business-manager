@@ -24,42 +24,40 @@
             <a href="/auth/logout">Logout</a>
         </nav>
     </header>
-
-    <!-- Appointments Page -->
-<section class="appointments">
-    <h2>My Appointments</h2>
-    <label for="status-filter">Status:</label>
-    <select id="status-filter">
-        <option value="">Select Status</option>
-        <option value="pending">Pending</option>
-        <option value="confirmed">Confirmed</option>
-        <option value="canceled">Canceled</option>
-    </select>
-
-    <button id="filter-btn">Apply Filters</button>
-
-            <div id="appointments-list"></div>
-
-        <!-- Reschedule Modal -->
-<div id="reschedule-modal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <h3>Reschedule Appointment</h3>
-        <form id="reschedule-form">
-            <label for="new-date">Select New Date and Time:</label>
-            <input type="datetime-local" id="new-date" required />
-            <input type="hidden" id="appointment-id" />
-            <button  id="save-reschedule" type="submit">Save Changes</button>
-            <button type="button" id="close-modal">Cancel</button>
-        </form>
-    </div>
-</div>
-  </section>
+    <main>
+        <!-- Messages section-->
+        <section id="messages-section">
+            <div class="messages-container">
+                <!-- Left Panel: Conversation List -->
+                <div class="conversation-list">
+                    <h2>Conversations</h2>
+                    <ul id="conversationList">
+                        <!-- Dynamically populated  -->
+                    </ul>
+                </div>
+    
+                <!-- Right Panel: Chat Area -->
+                <div class="chat-area">
+                    <div id="chatHeader" class="chat-header">
+                        <h3 id="chatWith">Chat with: </h3>
+                    </div>
+                    <div id="chatMessages" class="chat-messages">
+                        <!-- Dynamically populated  -->
+                    </div>
+                    <div class="chat-input">
+                        <textarea id="chatInput" placeholder="Type your message..."></textarea>
+                        <button id="sendMessageBtn">Send</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
   
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 StartSmart. All rights reserved.</p>
     </footer>
 
-    <script src="/js/customer/appointments.js"></script>
+    <script src="/js/customer/messages.js"></script>
 </body>
 </html>

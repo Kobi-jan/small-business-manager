@@ -33,6 +33,7 @@
         <option value="pending">Pending</option>
         <option value="confirmed">Confirmed</option>
         <option value="canceled">Canceled</option>
+        <option value="completed">Completed</option>
     </select>
 
     <button id="filter-btn">Apply Filters</button>
@@ -40,19 +41,6 @@
 
             <div id="appointments-list"></div>
         </div>
-        <!-- Reschedule Modal -->
-<div id="reschedule-modal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <h3>Reschedule Appointment</h3>
-        <form id="reschedule-form">
-            <label for="new-date">Select New Date and Time:</label>
-            <input type="datetime-local" id="new-date" required />
-            <input type="hidden" id="appointment-id" />
-            <button type="submit">Save Changes</button>
-            <button type="button" id="close-modal">Cancel</button>
-        </form>
-    </div>
-</div>
 
     </main>
 

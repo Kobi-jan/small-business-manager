@@ -1,27 +1,46 @@
-// Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', function() {
-    fetchProducts(); // Fetch all products when the page loads
+    fetchProducts(); // Fetch products when the page loads
 
-    // Add event listener for product search
     document.getElementById('productSearch').addEventListener('input', searchProducts);
-    
-    // Close search dropdown when the user clicks the close button
-    document.getElementById('closeDropdown').addEventListener('click', () => {
+    document.getElementById('businessSearch').addEventListener('input', searchBusinesses);
+    document.getElementById('closeProductDropdown').addEventListener('click', () => {
         document.getElementById('searchResultsDropdown').style.display = 'none';
     });
-
-    // Add event listener to close the modal
-    document.getElementById('closeModal').addEventListener('click', () => {
-        document.getElementById('productModal').style.display = 'none';
+    document.getElementById('closeBusinessDropdown').addEventListener('click', () => {
+        document.getElementById('searchResultsDropdownBusiness').style.display = 'none';
     });
+    document.getElementById('productModal').addEventListener('click', function(event) {
+        if (event.target === document.getElementById('productModal')) {
+            closeModal(); 
+        }
+    });
+    
+    // Close modal buttons
+    const closeModalBtn = document.getElementById('closeModal');
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', closeModal);
+        console.log('closeModal button listener attached');
+    } else {
+        console.error('closeModal button not found');
+    }
+
+    const closeModalBtnAlt = document.getElementById('closeModalBtn');
+    if (closeModalBtnAlt) {
+        closeModalBtnAlt.addEventListener('click', closeModal);
+        console.log('closeModalBtn button listener attached');
+    } else {
+        console.error('closeModalBtn button not found');
+    }
 });
 
-// Fetch all products from the backend and display them
+
+
+// Fetch all products from the backend
 function fetchProducts() {
     fetch('/customers/products')
         .then(response => response.json())
         .then(data => {
-            displayProducts(data); // Display all products
+            displayProducts(data); 
         })
         .catch(err => console.error('Error fetching products:', err));
 }
@@ -29,7 +48,7 @@ function fetchProducts() {
 // Display products in the online store
 function displayProducts(products) {
     const productList = document.getElementById('productList');
-    productList.innerHTML = ''; // Clear previous product list
+    productList.innerHTML = ''; 
 
     if (products.length === 0) {
         productList.innerHTML = '<p>No products available.</p>';
@@ -40,43 +59,70 @@ function displayProducts(products) {
         const productDiv = document.createElement('div');
         productDiv.classList.add('product-item');
         productDiv.innerHTML = `
-            <img src="${product.image_url}" alt="${product.name}" class="product-image">
+            <img src="${product.image_url}" alt="${product.product_name}" class="product-image">
             <h3>${product.product_name}</h3>
             <p>$${product.price}</p>
         `;
-        productDiv.addEventListener('click', () => showProductModal(product)); // Open modal on product click
-        productList.appendChild(productDiv);
+        productDiv.addEventListener('click', () => showProductModal(product)); 
+        productList.appendChild(productDiv); 
     });
 }
 
-// Show product details in the modal when clicked
-function showProductModal(product) {
-    // Set the modal content
-    document.getElementById('modalProductImage').src = product.image_url;
-    document.getElementById('modalProductName').textContent = product.product_name;
-    document.getElementById('modalProductPrice').textContent = `$${product.price}`;
-    document.getElementById('modalProductDescription').textContent = product.product_description;
-    document.getElementById('modalSellerName').textContent = `Seller: ${product.business_name}`;
+// Function to show a modal with product details
+function showProductModal(product) { 
+
+    // Populate modal using innerHTML
+    const modalContent = `
+        <div class="modal-content">
+            <span id="closeModal" class="close-btn">&times;</span>
+            <img src="${product.image_url}" alt="${product.product_name}" class="modal-image">
+            <h3>${product.product_name}</h3>
+            <p>$${product.price}</p>
+            <p>${product.product_description}</p>
+            <p>Seller: ${product.business_name}</p>
+            <button id="addToCartModalBtn" data-product-id="${product.product_id}">Add to Cart</button>
+            <button id="closeModalBtn">Close</button>
+        </div>
+    `;
+
+    const modal = document.getElementById('productModal');
+    modal.innerHTML = modalContent;
 
     // Show the modal
-    document.getElementById('productModal').style.display = 'block';
+    modal.classList.add('show');
+    modal.style.display = 'block';
 
-    // Add to cart functionality
-    document.getElementById('addToCartModalBtn').onclick = function() {
-        addToCart(product.product_id);
-    };
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+    document.getElementById('addToCartModalBtn').addEventListener('click', () => addToCart(product.product_id));
 }
 
-// Add product to the cart (store it in localStorage for now)
-function addToCart(productId) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.push(productId);
-    localStorage.setItem('cart', JSON.stringify(cart));
+// Function to add a product to the cart 
+async function addToCart(productId) {
+    try {
+        const response = await fetch('/customers/cart/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ productId: productId, quantity: 1 })  
+        });
 
-    alert('Product added to cart!');
+        // Check if the request was successful
+        if (response.ok) {
+            const updatedCart = await response.json();  
+            console.log('Updated cart:', updatedCart);
+
+            alert('Product added to cart!');
+        } else {
+            alert('Failed to add product to cart.');
+        }
+    } catch (error) {
+        console.error('Error adding product to cart:', error);
+    }
 }
 
-// Handle the product search functionality
+// Product search functionality
 function searchProducts() {
     const searchTerm = document.getElementById('productSearch').value.toLowerCase();
     
@@ -85,7 +131,7 @@ function searchProducts() {
         return;
     }
 
-    fetch('/customers/products?search=' + searchTerm) // Send search term to the backend
+    fetch('/customers/products?search=' + searchTerm) 
         .then(response => response.json())
         .then(results => {
             showSearchResults(results);
@@ -93,12 +139,29 @@ function searchProducts() {
         .catch(err => console.error('Error searching for products:', err));
 }
 
+function searchBusinesses() {
+    const searchTerm = document.getElementById('businessSearch').value.toLowerCase();
+    
+    if (searchTerm === '') {
+        document.getElementById('searchResultsDropdown').style.display = 'none';
+        return;
+    }
+
+    fetch(`/customers/search?searchTerm=${searchTerm}`)
+        .then(response => response.json())
+        .then(results => {
+            showSearchResultsBusiness(results);
+        })
+        .catch(err => console.error('Error searching for business:', err));
+}
+
+
 // Display search results in the dropdown
 function showSearchResults(results) {
     const dropdown = document.getElementById('searchResultsDropdown');
     const resultsContainer = document.getElementById('searchResultsContainer');
 
-    resultsContainer.innerHTML = ''; // Clear previous results
+    resultsContainer.innerHTML = ''; 
 
     if (results.length === 0) {
         resultsContainer.innerHTML = '<p>No results found</p>';
@@ -114,5 +177,44 @@ function showSearchResults(results) {
         });
     }
 
-    dropdown.style.display = 'block'; // Show the search results dropdown
+    dropdown.style.display = 'block'; 
+}
+
+// Display search results in the dropdown
+function showSearchResultsBusiness(results) {
+    const dropdown = document.getElementById('searchResultsDropdownBusiness');
+    const resultsContainer = document.getElementById('searchResultsContainerBusiness');
+
+    resultsContainer.innerHTML = ''; 
+
+    if (results.length === 0) {
+        resultsContainer.innerHTML = '<p>No results found</p>';
+    } else {
+        results.forEach(business => {
+            const resultItem = document.createElement('div');
+            resultItem.classList.add('search-result-item');
+            resultItem.innerHTML = `
+                <div class="business-logo">
+          <img src="${business.logo_image_url || '/Images/default-logo.png'}" alt="${business.business_name} logo" />
+      </div>
+      <h3>${business.business_name}</h3>
+      <p>${business.location} - ${business.category}</p>
+      <a href="/customers/business/${business.business_id}" class="view-details-btn">View Details</a>
+           ` ;
+            resultsContainer.appendChild(resultItem);
+        });
+    }
+
+    dropdown.style.display = 'block'; 
+}
+
+function closeModal() {
+    const modal = document.getElementById('productModal');
+    if (modal) {
+        modal.classList.remove('show');  
+        modal.style.display = 'none';   
+        modal.innerHTML = '';  
+    } else {
+        console.error('Modal not found');
+    }
 }

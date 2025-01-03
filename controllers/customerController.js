@@ -1,7 +1,8 @@
+const exp = require('constants');
 const db = require('../config/db');
 const path = require('path');
 
-// Function to search businesses
+// Function to search for businesses
 exports.searchBusinesses = (req, res) => {
     const searchTerm = req.query.searchTerm || '';
   
@@ -16,17 +17,16 @@ exports.searchBusinesses = (req, res) => {
         return res.status(500).send('Internal Server Error');
       }
   
-      // Include logo_url in the response
       const businessesWithLogo = results.map(business => ({
         ...business,
-        logo_image_url: business.logo_image_url ? `${business.logo_image_url}` : null, // Adjust path if needed
+        logo_image_url: business.logo_image_url ? `${business.logo_image_url}` : null, 
       }));
-  
-      // Send the modified search results
+
       res.json(businessesWithLogo);
     });
   };
   
+  // Simulate featured businesses
   exports.getFeaturedBusinesses = (req, res) => {
     const query = `
       SELECT b.business_id, b.business_name, b.logo_image_url, AVG(r.rating) AS average_rating
@@ -47,19 +47,19 @@ exports.searchBusinesses = (req, res) => {
       const businessesWithRating = results.map(business => ({
         ...business,
         logo_image_url: business.logo_image_url ? `${business.logo_image_url}` : null,
-        average_rating: business.average_rating || 0  // Default to 0 if no rating exists
+        average_rating: business.average_rating || 0  
       }));
       
       res.json(businessesWithRating);
     });
   };
 
+// Function to view business details
   exports.viewBusinessProfile = async (req, res) => {
     const businessId = req.params.business_id;
-    console.log("Business ID: ", businessId);
   
     try {
-      // Query business details
+        // Query the business details
       const businessQuery = `
         SELECT b.*, AVG(r.rating) AS average_rating
         FROM businesses b
@@ -83,8 +83,7 @@ exports.searchBusinesses = (req, res) => {
         ORDER BY r.created_at DESC`;
 
       const [reviews] = await db.promise().query(reviewsQuery, [businessId]);
-  
-      // Send business and reviews as JSON
+
       res.json({ business, reviews });
   
     } catch (err) {
@@ -94,11 +93,11 @@ exports.searchBusinesses = (req, res) => {
   };
   
 
-// Controller function to handle appointment scheduling
+// Function to handle appointment scheduling
 exports.scheduleAppointment = async (req, res) => {
-  const { appointmentDateTime } = req.body; // Expecting a datetime in the body
-  const businessId = req.params.business_id; // Business ID from the route param
-  const customerId = req.session.user.id; // Assuming the customer is logged in and their ID is stored in the session
+  const { appointmentDateTime } = req.body; 
+  const businessId = req.params.business_id; 
+  const customerId = req.session.user.id; 
 
   // Validation
   if (!customerId || !businessId || !appointmentDateTime) {
@@ -130,14 +129,13 @@ exports.scheduleAppointment = async (req, res) => {
   }
 };
 
+// Function to leave a review
 exports.leaveReview = async (req, res) => {
-  console.log('Request body:', req.body); // Log the request body
-
   const businessId = req.params.business_id;
-  const { rating, review_txt } = req.body;  // review_txt is optional
-  const customerId = req.session.user.id;  // Assuming customerId is stored in session
+  const { rating, review_txt } = req.body;  
+  const customerId = req.session.user.id;  
 
-  // Ensure rating is provided and is valid
+  // Validation
   if (!rating || rating < 1 || rating > 5 || !customerId) {
       return res.status(400).json({ error: 'Rating or customer ID is missing or invalid' });
   }
@@ -151,15 +149,11 @@ exports.leaveReview = async (req, res) => {
           await db.execute('INSERT INTO reviews (business_id, customer_id, rating) VALUES (?, ?, ?)', [businessId, customerId, rating]);
       }
 
-      // Fetch the updated list of reviews for the business
       const result = await db.execute(
           'SELECT r.rating, r.review_txt, r.created_at, c.first_name FROM reviews r LEFT JOIN customers c ON r.customer_id = c.customer_id WHERE r.business_id = ? ORDER BY r.created_at DESC', 
           [businessId]
       );
 
-      console.log('Query result:', result);  // Log the entire result to check the structure
-
-      // The rows are stored in _rows, not the result directly
       const rows = result._rows;
 
       if (!Array.isArray(rows)) {
@@ -179,22 +173,20 @@ exports.leaveReview = async (req, res) => {
   }
 };
 
-
+// Get appointments for a customer
 exports.getAppointments = async (req, res) => {
-  const { status } = req.query; // Extract filters from query params
+  const { status } = req.query; 
   console.log('Filters:', status);
 
   try {
-      // Get the business_id from the session (it was stored during login)
-      const customerId = req.session.user.id; // Access business_id from session
+      const customerId = req.session.user.id; 
 
       if (!customerId) {
           return res.status(401).json({ message: 'Customer not found or not authenticated.' });
       }
 
-      // Build the dynamic query for filtering
       let query = `
-          SELECT  b.business_name, a.appointment_date, a.status
+          SELECT  b.business_name, a.appointment_date, a.status, a.appointment_id
           FROM appointments a
           JOIN businesses b ON a.business_id = b.business_id
           WHERE a.customer_id = ?`;
@@ -228,10 +220,9 @@ exports.getAppointments = async (req, res) => {
 };
 
 
-
+// Cancel an appointment
 exports.cancelAppointment = async (req, res) => {
   const appointmentId = req.params.appointmentId;
-  console.log('Canceling appointment with ID:', appointmentId);
 
   try {
       const query = 'UPDATE appointments SET status = ? WHERE appointment_id = ?';
@@ -244,7 +235,7 @@ exports.cancelAppointment = async (req, res) => {
           if (results.affectedRows === 0) {
               return res.status(404).json({ message: 'Appointment not found' });
           }
-
+        
           res.json({ success: true });
       });
   } catch (error) {
@@ -255,7 +246,9 @@ exports.cancelAppointment = async (req, res) => {
 
 // Update appointment date
 exports.rescheduleAppointment = async (req, res) => {
-  const { appointmentId, newDate } = req.body;
+  const { newDate } = req.body;
+  appointmentId = req.params.appointmentId;
+
   try {
       const query = 'UPDATE appointments SET appointment_date = ?, status = "pending" WHERE appointment_id = ?';
       db.query(query, [newDate, appointmentId], (err, results) => {
@@ -268,7 +261,7 @@ exports.rescheduleAppointment = async (req, res) => {
               return res.status(404).json({ error: 'Appointment not found' });
           }
 
-          res.status(200).json({ message: 'Appointment rescheduled successfully' });
+          res.json({ success: true });
       });
   } catch (error) {
       console.error('Error rescheduling appointment:', error);
@@ -277,7 +270,7 @@ exports.rescheduleAppointment = async (req, res) => {
 };
 
 
-// Fetch reviews for a customer
+// Get reviews for a business
 exports.getReviews = async (req, res) => {
   const customerId = req.session.user.id; // Get customer ID from session
 
@@ -286,7 +279,6 @@ exports.getReviews = async (req, res) => {
   }
 
   try {
-      // Query to fetch reviews
       const query = `
           SELECT 
               b.business_name,
@@ -323,9 +315,9 @@ exports.getReviews = async (req, res) => {
   }
 };
 
-// Get products for the online store, with optional search query
+// Get products for the online store with a search query
 exports.getProducts = async (req, res) => {
-  const searchQuery = req.query.search ? `%${req.query.search}%` : '%';  // Default to all products if no search term
+  const searchQuery = req.query.search ? `%${req.query.search}%` : '%';  
 
   try {
       const query = `
@@ -352,3 +344,338 @@ exports.getProducts = async (req, res) => {
   }
 };
 
+
+// Add to cart with stock check 
+exports.addToCart = async (req, res) => {
+    const { productId, quantity } = req.body;
+
+    // Initialize cart if it doesn't exist
+    if (!req.session.cart) {
+        req.session.cart = [];
+    }
+
+    // Fetch the product from the database to check stock availability 
+    const query = `SELECT p.*, b.business_id 
+    FROM products p 
+    JOIN businesses b ON p.business_id = b.business_id
+    WHERE product_id = ?
+    `;
+    const product = await new Promise((resolve, reject) => {
+        db.query(query, [productId], (err, results) => {
+            if (err) return reject(err);
+            resolve(results[0]);
+        });
+    });
+
+    // If no product found or quantity exceeds stock, return an error
+    if (!product || quantity > product.quantity_in_stock) {
+        return res.status(400).json({ message: 'Not enough stock available' });
+    }
+
+    // Check if product is already in cart
+    const existingProduct = req.session.cart.find(item => item.productId === productId);
+    if (existingProduct) {
+        existingProduct.quantity += quantity; 
+    } else {
+        req.session.cart.push({
+            businessId: product.business_id,
+            productId,
+            quantity,
+            name: product.product_name,
+            price: product.price,
+            imageUrl: product.image_url,  
+            description: product.product_description  
+        });
+    }
+
+    // Return updated cart 
+    res.json(req.session.cart);  
+};
+
+
+// View the cart
+exports.viewCart = (req, res) => {
+    const cart = req.session.cart || [];  // Get cart from session
+    res.json(cart);  
+};
+
+
+exports.updateCart = (req, res) => {
+    const { productId, operation } = req.body;  
+
+    if (!req.session.cart) {
+        return res.status(400).json({ message: 'Cart is empty' });
+    }
+
+    const item = req.session.cart.find(item => item.productId === parseInt(productId));
+
+    if (item) {
+        if (operation === 'increase') {
+            item.quantity += 1;
+        } else if (operation === 'decrease' && item.quantity > 1) {
+            item.quantity -= 1;
+        }
+        return res.json(req.session.cart);  
+    } else {
+        return res.status(404).json({ message: 'Product not found in cart' });
+    }
+};
+
+
+
+// Remove an item from the cart
+exports.removeFromCart = (req, res) => {
+    const { productId } = req.body;
+
+    if (!req.session.cart) {
+        return res.status(400).json({ message: 'Cart is empty' });
+    }
+
+    req.session.cart = req.session.cart.filter(item => item.productId !== parseInt(productId));
+    res.json(req.session.cart);  
+};
+
+// Checkout the cart
+exports.checkout = async (req, res) => {
+    const { shippingAddress } = req.body;  
+    const customerId = req.session.user.id;  
+    const cart = req.session.cart;
+
+    // Validation
+    if (!cart || cart.length === 0) {
+        return res.status(400).json({ message: 'Your cart is empty' });
+    }
+
+    if (!shippingAddress) {
+        return res.status(400).json({ message: 'Shipping address is required' });
+    }
+
+    const totalAmount = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+
+    // Create a new order in the orders table
+    const orderQuery = 'INSERT INTO orders (customer_id, total_amount, shipping_address, order_date) VALUES (?, ?, ?, NOW())';
+    const values = [customerId, totalAmount, shippingAddress];
+
+    try {
+        // Insert the order into the database
+        const [orderResult] = await db.promise().query(orderQuery, values);
+        const orderId = orderResult.insertId;
+
+        // Insert each item into the order_items table
+        for (const item of cart) {
+            const orderItemQuery = 'INSERT INTO order_items (order_id, product_id, business_id, quantity, price) VALUES (?, ?, ?, ?, ?)';
+            const orderItemValues = [orderId, item.productId, item.businessId, item.quantity, item.price];
+            await db.promise().query(orderItemQuery, orderItemValues);
+        }
+
+        // Simulate payment
+        const paymentStatus = Math.random() > 0.1 ? 'paid' : 'failed';  // Random probability for payment simulation
+        const paymentQuery = 'INSERT INTO payments (order_id, payment_status, amount) VALUES (?, ?, ?)';
+        const paymentValues = [orderId, paymentStatus, totalAmount];
+        await db.promise().query(paymentQuery, paymentValues);
+
+        // Clear the cart after order and payment
+        req.session.cart = [];
+
+        res.json({
+            message: paymentStatus === 'paid' ? 'Order placed successfully!' : 'Payment failed, try again later',
+            status: paymentStatus
+        });
+    } catch (error) {
+        console.error('Error processing checkout:', error);
+        res.status(500).json({ message: 'Error processing order' });
+    }
+};
+
+// Get order history for a customer
+exports.getOrderHistory = async (req, res) => {
+    const customerId = req.session.user.id; 
+
+    if (!customerId) {
+        return res.status(401).json({ message: 'Customer not found or not authenticated.' });
+    }
+
+    try {
+        const query = `
+            SELECT o.order_id, o.total_amount, o.order_date, p.payment_status, p.amount
+            FROM orders o
+            JOIN payments p ON o.order_id = p.order_id
+            WHERE o.customer_id = ?
+            ORDER BY o.order_date DESC
+        `;
+        
+        const params = [customerId];
+
+        const [orders] = await db.promise().query(query, params);
+
+        if (orders.length === 0) {
+            return res.status(404).json({ message: 'No orders found for this customer.' });
+        }
+
+        res.json(orders);
+    } catch (error) {
+        console.error('Error fetching order history:', error);
+        res.status(500).json({ error: 'Error fetching order history' });
+    }
+};
+
+// Fetch order items for a given order
+exports.getOrderItems = async (req, res) => {
+    const { orderId } = req.params;
+
+    try {
+        const query = `
+            SELECT p.product_name, i.quantity, i.price
+            FROM order_items i
+            JOIN products p ON i.product_id = p.product_id
+            WHERE i.order_id = ?
+        `;
+        
+        const [orderItems] = await db.promise().query(query, [orderId]);
+
+        if (orderItems.length === 0) {
+            return res.status(404).json({ message: 'No items found for this order.' });
+        }
+
+        res.json(orderItems);
+    } catch (error) {
+        console.error('Error fetching order items:', error);
+        res.status(500).json({ message: 'Error fetching order items' });
+    }
+};
+
+
+// Send a Message
+exports.sendMessage = async (req, res) => {
+    const businessId  = req.params.business_id;
+    const { message_text } = req.body;  
+
+    const customerId = req.session.user.id;  
+
+    try {
+        // Insert the message into the database
+        const query = `
+            INSERT INTO messages (sender_id, recipient_id, message_text, sender_type)
+            VALUES (?, ?, ?, ?)
+        `;
+        await db.execute(query, [customerId, businessId, message_text, 'customer']);
+
+        res.status(200).json({ message: 'Message sent successfully' });
+    } catch (error) {
+        console.error('Error sending message:', error);
+        res.status(500).json({ error: 'Error sending message' });
+    }
+};
+
+// Get conversations for a customer
+exports.getConversations = async (req, res) => {
+    const customerId = req.session.user.id;
+
+    if (!customerId) {
+        return res.status(400).json({ error: 'Customer ID is required' });
+    }
+
+    try {
+        const query = `
+            SELECT DISTINCT
+                b.business_id,
+                b.business_name,
+                b.logo_image_url
+            FROM messages m
+            JOIN businesses b ON b.business_id = m.sender_id OR b.business_id = m.recipient_id
+            WHERE (m.sender_id = ? AND m.sender_type = 'customer') 
+               OR (m.recipient_id = ? AND m.sender_type = 'business')
+        `;
+
+        const params = [customerId, customerId];
+
+        const conversations = await new Promise((resolve, reject) => {
+            db.query(query, params, (err, results) => {
+                if (err) return reject(err);
+                resolve(results);
+            });
+        });
+
+        if (!conversations.length) {
+            return res.status(404).json({ message: 'No conversations found' });
+        }
+
+        res.json(conversations);
+    }catch (error) {
+        console.error('Error fetching conversations:', error);
+        res.status(500).json({ error: 'An error occurred while fetching conversations' });
+    }
+};
+
+// Get messages between a customer and a business
+exports.getMessages = async (req, res) => {
+    const customerId = req.session.user.id;  
+    const businessId = req.params.businessId;  
+
+    if (!customerId || !businessId) {
+        return res.status(400).json({ error: 'Customer ID and Business ID are required' });
+    }
+
+    try {
+        const query = `
+            SELECT m.message_text, m.sender_type, m.created_at
+            FROM messages m
+            WHERE (m.sender_id = ? AND m.recipient_id = ?)
+               OR (m.sender_id = ? AND m.recipient_id = ?)
+            ORDER BY created_at ASC
+        `;
+
+        const params = [customerId, businessId, businessId, customerId];
+
+        const messages = await new Promise((resolve, reject) => {
+            db.query(query, params, (err, results) => {
+                if (err) return reject(err);
+                resolve(results);
+            });
+        });
+
+        if (!messages.length) {
+            return res.status(404).json({ message: 'No messages found' });
+        }
+
+        res.json({ messages });
+
+    } catch (error) {
+        console.error('Error fetching messages:', error);
+        res.status(500).json({ error: 'An error occurred while fetching messages' });
+    }
+};
+
+// Send a message to a business from the conversation
+exports.sendMessage2 = async (req, res) => {
+    const customerId = req.session.user.id;  
+    const { businessId, messageText } = req.body; 
+
+    if (!customerId || !businessId || !messageText) {
+        return res.status(400).json({ error: 'Customer ID, Business ID, and Message Text are required' });
+    }
+
+    const senderType = 'customer';  
+    const timestamp = new Date();  
+
+    try {
+        const query = `
+            INSERT INTO messages (sender_id, recipient_id, sender_type, message_text, created_at)
+            VALUES (?, ?, ?, ?, ?)
+        `;
+
+        const params = [customerId, businessId, senderType, messageText, timestamp];  // customerId for sender_id, businessId for recipient_id
+
+        await new Promise((resolve, reject) => {
+            db.query(query, params, (err, results) => {
+                if (err) return reject(err);
+                resolve(results);
+            });
+        });
+
+        res.status(200).json({ message: 'Message sent successfully' });
+    } catch (error) {
+        console.error('Error sending message:', error);
+        res.status(500).json({ error: 'An error occurred while sending the message' });
+    }
+};

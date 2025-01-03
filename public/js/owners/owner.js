@@ -1,8 +1,8 @@
-const form = document.querySelector('#profileSetupForm'); // Replace with the actual ID or selector of your form
+const form = document.querySelector('#profileSetupForm'); 
 
 
 form.addEventListener('submit', async function (event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault(); 
 
     const formData = new FormData(form);
     const errorMessages = document.getElementById('errorMessages');
@@ -15,7 +15,7 @@ form.addEventListener('submit', async function (event) {
         const response = await fetch('/owner/complete-profile', {
             method: 'POST',
             body: formData,
-            credentials: 'same-origin', // Include cookies with the request
+            credentials: 'same-origin', 
         });
 
         if (!response.ok) {
@@ -28,7 +28,7 @@ form.addEventListener('submit', async function (event) {
 
         if (result.success) {
             alert('Your profile has been updated successfully!');
-            window.location.href = '/auth/login'; // Redirect to login page after completing profile
+            window.location.href = '/auth/login'; 
         } else {
             errorMessages.textContent = result.message || 'An error occurred. Please try again.';
             errorMessages.style.display = 'block';

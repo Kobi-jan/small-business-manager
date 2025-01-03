@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | StartSmart</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/Images/Favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Images/Favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="/css/onlineStoreCustomer.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a class="logopic" href="/">
+                <img src="/Images/Logo.png" alt="Website logo: StartSmart" width="180" height="180">
+            </a>
+            <a href="/customers/dashboard">Dashboard</a>
+            <a href="/customers/store" class="back-btn" id="backBtn">← Back</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </header>
+
+    <!-- Cart Page Section -->
+    <section class="cart">
+        <h2>Your Cart</h2>
+        <div id="cartItemsContainer">
+            <!-- Cart items will be dynamically populated here -->
+        </div>
+
+        <div id="cartSummary">
+            <p>Total: $<span id="cartTotal">0.00</span></p>
+
+            <!-- Shipping Address Form -->
+            <div id="shippingForm">
+                <label for="shippingAddress">Enter your shipping address:</label>
+                <textarea id="shippingAddress" placeholder="Enter your shipping address here..." required></textarea>
+            </div>
+            
+            <button id="checkoutBtn">Proceed to Checkout</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 StartSmart. All rights reserved.</p>
+    </footer>
+
+    <script src="/js/customer/cart.js"></script>
+</body>
+</html>

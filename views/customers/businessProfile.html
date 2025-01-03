@@ -33,11 +33,13 @@
                 <p><strong>Location:</strong> <span id="businessLocation"></span> </p>
                 <p><strong>Operating Hours:</strong> <span id="businessHours"></span> </p>
                 <p><strong>Rating:</strong> <span id="businessRating"></span> </p>
-                
-
-            <div class="business-icons">
-                <a href="#" class="icon-btn" id="messageIcon"><img src="/Images/Icons/chat.png" alt="Message Icon"></a>
-                <a href="#" class="icon-btn" id="onlineStoreIcon"><img src="/Images/Icons/online-store.png" alt="Online Store Icon"></a>
+            </div>
+            <section class="sections-container">
+            <!-- Message Section -->
+            <div class="message-section" style="margin-top: 50px;">
+                <h2><img src="/Images/Icons/chat.png" alt="Message Icon" width="40" height="40"> Have any questions for this business? </h2>
+                <textarea id="messageText" placeholder="Type your message..."></textarea>
+                <button id="sendMessageBtn">Send Message</button>
             </div>
 
             <!-- Schedule Appointments Section -->
@@ -52,6 +54,7 @@
                 </form>
                 <div id="appointmentConfirmation"></div>
             </div>
+        </section>
             
 
            <!-- Leave a Review Section -->
@@ -61,7 +64,7 @@
     <div>
         <label for="rating">Rating:</label>
         <div id="stars">
-            <!-- Stars for rating (initially all empty) -->
+            <!-- Stars for rating  -->
             <span class="star" data-value="1">★</span>
             <span class="star" data-value="2">★</span>
             <span class="star" data-value="3">★</span>
@@ -78,7 +81,7 @@
     <button id="leaveReviewBtn">Submit Review</button>
 
     <!-- Review List -->
-    <ul id="reviewsList"></ul> 
+    <ul id="reviewsList" class="review-grid"></ul> 
 </div>
 
 
@@ -107,24 +110,22 @@
         }
     
         document.addEventListener("DOMContentLoaded", async function() {
-            const businessId = window.location.pathname.split("/").pop();  // Extract businessId from URL
-            console.log("Business ID:", businessId);  // Log the extracted business ID
+            const businessId = window.location.pathname.split("/").pop();  
+            console.log("Business ID:", businessId);  
         
             try {
                 const response = await fetch(`/customers/api/business/${businessId}`);
                 const data = await response.json();
                 const stars = generateStars(data.business.average_rating);
-                    
-                console.log('Fetched Business Data:', data); // Debugging line to see the structure
                 
-                if (data.business) {  // Ensure business data exists
+                if (data.business) {  
                     // Update the page with business data
                     document.getElementById('businessLogo').src = data.business.logo_image_url || '/Images/default-logo.png';
                     document.getElementById('businessName').textContent = data.business.business_name;
                     document.getElementById('businessDescription').textContent = data.business.business_description;
                     document.getElementById('businessLocation').textContent = data.business.location;
                     document.getElementById('businessHours').textContent = `${data.business.opening_time} - ${data.business.closing_time}`;
-                    document.getElementById('businessRating').textContent = `${stars}`; // Display stars for the business rating
+                    document.getElementById('businessRating').textContent = `${stars}`; 
         
                     // Display reviews
                     const reviewsList = document.getElementById('reviewsList');
@@ -144,8 +145,7 @@
                                     <p>${review.review_txt}</p>
                                 </div>
                             `;
-                    
-                            // Append review card to the list
+
                             reviewsList.appendChild(reviewCard);
                         });
                     } else {
@@ -157,7 +157,7 @@
             }
         });
     </script>
-    <script src="/js/customer/customerAppointment.js"></script>
+    <script src="/js/customer/businessProfile.js"></script>
     
     
 </body>

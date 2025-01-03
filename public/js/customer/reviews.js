@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to fetch and display reviews
     function fetchReviews() {
-        fetch('/customers/api/reviews') // Backend endpoint to fetch reviews
+        fetch('/customers/api/reviews') 
             .then(response => response.json())
             .then(data => {
-                reviewsContainer.innerHTML = ''; // Clear previous content
+                reviewsContainer.innerHTML = ''; 
 
                 if (data.message) {
                     // No reviews found

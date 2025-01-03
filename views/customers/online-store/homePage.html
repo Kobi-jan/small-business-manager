@@ -19,6 +19,8 @@
             <a href="/customers/viewAppointments">Appointments</a>
             <a href="/customers/reviews">Review History</a>
             <a href="/customers/store">Online Store</a>
+            <a href="/customers/messages">Messages</a>
+            <a href="/customers/order-history">Order History</a>
             <a href="/auth/logout">Logout</a>
         </nav>
     </header>
@@ -27,10 +29,17 @@
     <!-- Product Search -->
     <section id="search">
         <input type="text" id="productSearch" placeholder="Search for products..." />
-        <button id="closeDropdown" class="close-button">X</button>
-        <!-- Dropdown for search results -->
+        <button id="closeProductDropdown" class="close-button">X</button>
+        <!-- Dropdown for product search results -->
         <div id="searchResultsDropdown" class="dropdown">
             <div id="searchResultsContainer"></div>
+        </div>
+
+        <input type="text" id="businessSearch" placeholder="Search for businesses..." />
+        <button id="closeBusinessDropdown" class="close-button">X</button>
+        <!-- Dropdown for search results -->
+        <div id="searchResultsDropdownBusiness" class="dropdown">
+            <div id="searchResultsContainerBusiness"></div>
         </div>
     </section>
 
@@ -47,15 +56,7 @@
 
     <!-- Product Detail Modal -->
     <div id="productModal" class="modal">
-        <div class="modal-content">
-            <span id="closeModal" class="close-btn">&times;</span>
-            <img id="modalProductImage" class="modal-image" />
-            <h3 id="modalProductName"></h3>
-            <p id="modalProductPrice"></p>
-            <p id="modalProductDescription"></p>
-            <p id="modalSellerName"></p>
-            <button id="addToCartModalBtn">Add to Cart</button>
-        </div>
+        
     </div>
 
     <!-- Footer -->

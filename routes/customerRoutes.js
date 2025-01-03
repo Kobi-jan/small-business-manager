@@ -1,11 +1,10 @@
 const express = require('express');
-const multer = require('multer');
 const path = require('path');
+const multer = require('multer');
 const customerController = require('../controllers/customerController');
-
 const router = express.Router();
 
-//Route to serve dashboard
+// Dashboard page
 router.get('/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/customers/customerDashboard.html'));
 });
@@ -13,24 +12,24 @@ router.get('/dashboard', (req, res) => {
 // Business search route
 router.get('/search', customerController.searchBusinesses);
 
-// Route to get featured businesses
+// Get featured businesses
 router.get('/featured', customerController.getFeaturedBusinesses);
 
-// Route to view a business profile
+// View a business profile page
 router.get('/business/:business_id', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/customers/businessProfile.html'));
 });
 
-// Route to get business profile data
+// Get business profile data
 router.get('/api/business/:business_id', customerController.viewBusinessProfile);
 
-// Route for scheduling appointments
+// Scheduling appointments
 router.post('/api/appointments/:business_id', customerController.scheduleAppointment);
 
-// Route to post a new review
+// Post a new review
 router.post('/api/leaveReview/:business_id', customerController.leaveReview);
 
-// Route to serve appointments page
+// Serve appointments page
 router.get('/viewAppointments', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/customers/appointments.html'));
 });
@@ -38,13 +37,13 @@ router.get('/viewAppointments', (req, res) => {
 // Endpoint to get appointments
 router.get('/api/get-appointments', customerController.getAppointments);
 
-// Route to handle canceling an appointment
+// Canceling an appointment
 router.post('/api/cancel-appointment/:appointmentId', customerController.cancelAppointment);
 
-// Route to reschedule an appointment
-router.post('/api/reschedule-appointment', customerController.rescheduleAppointment);
+// Reschedule an appointment
+router.post('/api/reschedule-appointment/:appointmentId', customerController.rescheduleAppointment);
 
-// Route to serve appointments page
+// Serve appointments page
 router.get('/reviews', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/customers/reviewHistory.html'));
 });
@@ -52,7 +51,7 @@ router.get('/reviews', (req, res) => {
 // Get reviews for a customer
 router.get('/api/reviews', customerController.getReviews);
 
-// Route to serve appointments page
+// Serve appointments page
 router.get('/store', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/customers/online-store/homePage.html'));
 });
@@ -60,7 +59,7 @@ router.get('/store', (req, res) => {
 // Get list of products for the online store
 router.get('/products', customerController.getProducts);
 
-// Route to serve cart page
+// Serve cart page
 router.get('/cart', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/customers/online-store/cart.html'));
 });
@@ -69,7 +68,7 @@ router.get('/cart', (req, res) => {
 router.post('/cart/add', customerController.addToCart);
 
 // View the cart
-router.get('/cart', customerController.viewCart);
+router.get('/api/cart', customerController.viewCart);
 
 // Remove an item from the cart
 router.delete('/cart/remove', customerController.removeFromCart);
@@ -77,5 +76,36 @@ router.delete('/cart/remove', customerController.removeFromCart);
 // Update the quantity of an item in the cart
 router.put('/cart/update', customerController.updateCart);
 
+// Handle checkout 
+router.post('/checkout', customerController.checkout);  // Simulate checkout
+
+// Get order history page
+router.get('/order-history', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views/customers/orderHistory.html'));
+});
+
+// Get order history
+router.get('/api/order-history', customerController.getOrderHistory);
+
+// Get order items for a given order ID
+router.get('/api/order-items/:orderId', customerController.getOrderItems);
+
+// Sending a message
+router.post('/api/sendMessage/:business_id', customerController.sendMessage);
+
+
+// Serve messages page
+router.get('/messages', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views/customers/messages.html'));
+});
+
+// Get conversations 
+router.get('/api/messages/conversations', customerController.getConversations);
+
+// Get messages for a specific business 
+router.get("/api/messages/:businessId", customerController.getMessages);
+
+// Send a message from the customer to a business
+router.post("/api/messages/send", customerController.sendMessage2);
 
 module.exports = router;
