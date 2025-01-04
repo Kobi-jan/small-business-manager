@@ -29,7 +29,7 @@ app.use((err, req, res, next) => {
 
 // Landing page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html')); 
+    res.sendFile(path.join(__dirname, 'views' 'index.html')); 
 });
 
 // Routes
